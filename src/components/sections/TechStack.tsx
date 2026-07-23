@@ -55,7 +55,7 @@ export function TechStack() {
           <motion.div
             variants={itemVariants}
             key={tech.id}
-            className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-card/70 dark:bg-card/50 backdrop-blur-md border border-border/50 dark:border-white/[0.06] hover:bg-card dark:hover:bg-card/80 hover:border-border dark:hover:border-white/15 hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 transition-all duration-300 group cursor-default"
+            className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-card/70 dark:bg-card/50 sm:backdrop-blur-md border border-border/50 dark:border-white/[0.06] hover:bg-card dark:hover:bg-card/80 hover:border-border dark:hover:border-white/15 hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 transition-all duration-300 group cursor-default"
           >
             <div className="w-7 h-7 shrink-0 transition-transform duration-400 will-change-transform group-hover:scale-110 group-hover:-translate-y-0.5">
               <StackIcon name={tech.id as any} className="w-full h-full" />

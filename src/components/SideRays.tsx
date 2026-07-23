@@ -15,6 +15,7 @@ interface SideRaysProps {
   blend?: number;
   falloff?: number;
   opacity?: number;
+  isActive?: boolean;
   className?: string;
 }
 
@@ -44,6 +45,7 @@ const SideRays = ({
   blend = 0.75,
   falloff = 2.0,
   opacity = 1.0,
+  isActive = true,
   className = ''
 }: SideRaysProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,6 +56,11 @@ const SideRays = ({
   const cleanupFunctionRef = useRef<(() => void) | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const isActiveRef = useRef(isActive);
+
+  useEffect(() => {
+    isActiveRef.current = isActive;
+  }, [isActive]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -91,8 +98,9 @@ const SideRays = ({
 
       if (!containerRef.current) return;
 
+      const dpr = window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio, 1.5);
       const renderer = new Renderer({
-        dpr: Math.min(window.devicePixelRatio, 2),
+        dpr,
         alpha: true
       });
       rendererRef.current = renderer;
@@ -199,7 +207,7 @@ void main() {
 
       const updateSize = () => {
         if (!containerRef.current || !renderer) return;
-        renderer.dpr = Math.min(window.devicePixelRatio, 2);
+        renderer.dpr = window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio, 1.5);
         const { clientWidth: w, clientHeight: h } = containerRef.current;
         renderer.setSize(w, h);
         uniforms.iResolution.value = [w * renderer.dpr, h * renderer.dpr];
@@ -207,13 +215,16 @@ void main() {
 
       const loop = (t: number) => {
         if (!rendererRef.current || !uniformsRef.current || !meshRef.current) return;
-        uniforms.iTime.value = t * 0.001;
-        try {
-          renderer.render({ scene: mesh });
-          animationIdRef.current = requestAnimationFrame(loop);
-        } catch (e) {
-          return;
+        
+        if (isActiveRef.current) {
+          uniforms.iTime.value = t * 0.001;
+          try {
+            renderer.render({ scene: mesh });
+          } catch (e) {
+            // ignore
+          }
         }
+        animationIdRef.current = requestAnimationFrame(loop);
       };
 
       window.addEventListener('resize', updateSize);
@@ -234,6 +245,7 @@ void main() {
             if (canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas);
           } catch (e) {}
         }
+
         rendererRef.current = null;
         uniformsRef.current = null;
         meshRef.current = null;

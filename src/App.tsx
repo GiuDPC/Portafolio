@@ -6,7 +6,7 @@ import { Hero } from "./components/sections/Hero"
 import { Education } from "./components/sections/Experience"
 import { Projects } from "./components/sections/Projects"
 import { TechStack } from "./components/sections/TechStack"
-import { memo, useState, useEffect } from "react"
+import { memo } from "react"
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -23,27 +23,15 @@ function SectionDivider() {
 const MemoizedParticles = memo(Particles)
 const MemoizedSideRays = memo(SideRays)
 
-/**
- * Procedural fade-in for dark mode effects.
- * Delays mount slightly after theme change to avoid
- * competing with the view transition animation.
- */
-function DarkEffects() {
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    // Wait for the 400ms view transition to completely finish before
-    // heavy WebGL components mount and start rendering to avoid jank
-    const timer = setTimeout(() => setVisible(true), 500)
-    return () => clearTimeout(timer)
-  }, [])
-
-  if (!visible) return null
-
+function DarkEffects({ isDark }: { isDark: boolean }) {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
-      <div className="absolute inset-0 opacity-0 mix-blend-screen animate-[fadeIn_1.2s_ease_forwards]">
+    <div 
+      className={`fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000 ${isDark ? 'opacity-100' : 'opacity-0'}`} 
+      aria-hidden="true"
+    >
+      <div className="absolute inset-0 mix-blend-screen">
         <MemoizedSideRays
+          isActive={isDark}
           origin="top-left"
           rayColor1="#0ea5e9"
           rayColor2="#8b5cf6"
@@ -52,8 +40,9 @@ function DarkEffects() {
           blend={0.6}
         />
       </div>
-      <div className="absolute inset-0 opacity-0 animate-[fadeIn_1.5s_ease_0.3s_forwards]">
+      <div className="absolute inset-0">
         <MemoizedParticles
+          isActive={isDark}
           particleColors={['#ffffff', '#ffffff']}
           particleCount={100}
           particleSpread={10}
@@ -74,16 +63,17 @@ function MainContent() {
 
   return (
     <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary/30">
-      {/* Dark mode effects — procedural fade-in via DarkEffects component */}
-      {isDark && <DarkEffects key="dark-effects" />}
+      {/* Dark mode effects — permanently mounted, toggled via opacity */}
+      <DarkEffects isDark={isDark} />
 
       {/* Subtle light mode ambient */}
-      {!isDark && (
-        <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-amber-100/20 rounded-full blur-[120px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-sky-100/15 rounded-full blur-[100px]" />
-        </div>
-      )}
+      <div 
+        className={`fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000 ${!isDark ? 'opacity-100' : 'opacity-0'}`} 
+        aria-hidden="true"
+      >
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-amber-100/20 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-sky-100/15 rounded-full blur-[100px]" />
+      </div>
 
       <Navbar />
 

@@ -64,16 +64,40 @@ export function ThemeProvider({
 
     const transition = (document as any).startViewTransition(() => {
       flushSync(() => {
-        // ⚠️ CRÍTICO: actualizar la clase SINCRÓNICAMENTE dentro del callback.
-        // El useEffect de arriba corre ASYNC después del commit, pero el View
-        // Transition necesita el snapshot "new" con la clase ya actualizada
-        // para que old y new sean diferentes y la máscara tenga efecto.
         document.documentElement.classList.remove("light", "dark")
         document.documentElement.classList.add(resolved)
 
         localStorage.setItem(storageKey, newTheme)
         setThemeState(newTheme)
       })
+    })
+
+    transition.ready.then(() => {
+      const x = event.clientX
+      const y = event.clientY
+      const endRadius = Math.hypot(
+        Math.max(x, innerWidth - x),
+        Math.max(y, innerHeight - y)
+      )
+
+      const isDark = resolved === "dark"
+      const clipPath = [
+        `circle(0px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`
+      ]
+
+      document.documentElement.animate(
+        {
+          clipPath: isDark ? [...clipPath].reverse() : clipPath
+        },
+        {
+          duration: 500,
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+          pseudoElement: isDark
+            ? "::view-transition-old(root)"
+            : "::view-transition-new(root)"
+        }
+      )
     })
 
     transition.finished.finally(() => {
