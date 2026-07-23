@@ -1,5 +1,5 @@
 import { ThemeToggle } from "./ThemeToggle"
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useMemo, useCallback } from "react"
 import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useActiveSection } from "../hooks/useActiveSection"
@@ -9,12 +9,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 40)
-      if (window.scrollY > 40) {
-        setMobileOpen(false)
-      }
-    }
+    const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
@@ -27,6 +22,21 @@ export function Navbar() {
 
   const sectionIds = useMemo(() => links.map(l => l.id), [])
   const activeSection = useActiveSection(sectionIds)
+
+  const handleMobileNav = useCallback((sectionId: string) => {
+    // 1. Close menu FIRST
+    setMobileOpen(false)
+
+    // 2. After a tick (let AnimatePresence start exit), scroll to section
+    setTimeout(() => {
+      const el = document.getElementById(sectionId)
+      if (el) {
+        const navHeight = 80
+        const top = el.getBoundingClientRect().top + window.scrollY - navHeight
+        window.scrollTo({ top, behavior: "smooth" })
+      }
+    }, 50)
+  }, [])
 
   return (
     <motion.nav
@@ -104,18 +114,18 @@ export function Navbar() {
               {links.map((link) => {
                 const isActive = activeSection === link.id
                 return (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={`text-sm font-medium px-4 py-2.5 rounded-xl transition-all duration-300 ${
+                  <button
+                    key={link.id}
+                    type="button"
+                    onClick={() => handleMobileNav(link.id)}
+                    className={`text-left text-sm font-medium px-4 py-2.5 rounded-xl transition-all duration-300 ${
                       isActive
                         ? "text-foreground bg-secondary/80 dark:bg-white/10"
-                        : "text-muted-foreground active:text-foreground active:bg-secondary/40 dark:active:bg-white/5"
+                        : "text-muted-foreground"
                     }`}
                   >
                     {link.label}
-                  </a>
+                  </button>
                 )
               })}
             </div>
@@ -125,3 +135,4 @@ export function Navbar() {
     </motion.nav>
   )
 }
+

@@ -51,8 +51,8 @@ const projects: Project[] = [
     comments: "89 comentarios",
     image: "https://raw.githubusercontent.com/GiuDPC/brincapark-reservation-system/main/docs/screenshots/Hero-section.png",
     logo: "https://raw.githubusercontent.com/GiuDPC/brincapark-reservation-system/main/frontend/assets/img/Logo.png",
-    themeColor: "rgb(55, 14, 236)",
-    rgb: "99, 102, 241",
+    themeColor: "rgb(56, 189, 248)",
+    rgb: "56, 189, 248",
     tech: [
       { id: "typescript", name: "TypeScript" },
       { id: "nodejs", name: "Node.js" },
