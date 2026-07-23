@@ -6,6 +6,7 @@ import StackIcon from "tech-stack-icons"
 import { useTheme } from "../ThemeProvider"
 
 import sentinelLogo from "../../assets/LogoSentinelCoreBlanco.png"
+import illustrationTwo from "../../assets/Ilustración2.png"
 import graphCoreLogo from "../../assets/graph-core-logo.png"
 import screenshotSentinel from "../../assets/screenshot-sentinel.png"
 import screenshotGraphCore from "../../assets/screenshot-graphcore.png"
@@ -41,67 +42,67 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: "sentinel-core",
-    title: "Sentinel Core",
-    subtitle: "Sistema de Gestión de Incidencias y Monitoreo de ANS (SLA)",
-    date: "Jun 2026",
-    readTime: "4 min lectura",
-    views: "1.2k vistas",
-    comments: "42 comentarios",
-    image: screenshotSentinel,
-    logo: sentinelLogo,
-    themeColor: "rgba(59, 130, 246, 1)",
-    rgb: "59, 130, 246",
+    id: "brincapark",
+    title: "Brincapark",
+    subtitle: "Sistema integral de gestión de reservas para parques de diversiones",
+    date: "Ago 2025",
+    readTime: "6 min lectura",
+    views: "2.8k vistas",
+    comments: "89 comentarios",
+    image: "https://raw.githubusercontent.com/GiuDPC/brincapark-reservation-system/main/docs/screenshots/Hero-section.png",
+    logo: "https://raw.githubusercontent.com/GiuDPC/brincapark-reservation-system/main/frontend/assets/img/Logo.png",
+    themeColor: "rgb(55, 14, 236)",
+    rgb: "99, 102, 241",
     tech: [
-      { id: "react", name: "React 19" },
       { id: "typescript", name: "TypeScript" },
       { id: "nodejs", name: "Node.js" },
-      { id: "postgresql", name: "PostgreSQL" },
-      { id: "tailwindcss", name: "Tailwind CSS" }
+      { id: "express", name: "Express" },
+      { id: "mongodb", name: "MongoDB" },
+      { id: "vercel", name: "Vercel" }
     ],
-    github: "https://github.com/GiuDPC/sentinel-core",
-    demo: "https://sentinel-core.vercel.app/",
+    github: "https://github.com/GiuDPC/brincapark-reservation-system",
+    demo: "https://brincapark-reservation-system.vercel.app/",
     sections: [
       {
-        id: "introduccion",
-        title: "El Problema Operativo",
+        id: "problema",
+        title: "El Problema de Gestión",
         content: (
           <>
             <p>
-              En infraestructuras comerciales de gran escala, como el <strong>Centro Comercial Sambil Paraguaná</strong>, la gestión operativa suele verse fragmentada por la dependencia de canales de comunicación informales (como WhatsApp) y registros manuales en papel.
+              Brincapark partió de la necesidad de digitalizar los procesos manuales de un parque de atracciones, donde las reservas, los ingresos y la operación diaria dependían de múltiples pasos y registros dispersos.
             </p>
             <p>
-              Esta desconexión genera "silos de información" donde se pierde por completo la trazabilidad de las tareas. Sin un registro auditable, resulta técnicamente inviable monitorear el desempeño operativo, medir tiempos de respuesta o garantizar la correcta asignación de técnicos a las fallas reportadas.
+              El resultado era una alta probabilidad de errores operativos, duplicidad de reservas y una visibilidad limitada para la toma de decisiones del equipo administrativo.
             </p>
           </>
         )
       },
       {
         id: "solucion",
-        title: "La Solución: Sentinel Core",
+        title: "La Solución: Reservas y Operación Centralizada",
         content: (
           <>
             <p>
-              Para resolver esta problemática, diseñé y desarrollé <strong>Sentinel Core</strong>: un sistema centralizado de gestión de incidencias que sustituye la informalidad por un flujo de trabajo estructurado y completamente auditable.
+              Desarrollé una plataforma full stack que permite a los usuarios reservar tickets y paquetes de fiestas de forma sencilla, mientras que los administradores pueden gestionar reservas, visualizar métricas en tiempo real y controlar la operación desde un panel integral.
             </p>
             <ul>
-              <li><strong>Trazabilidad Absoluta:</strong> Cada incidencia reportada genera un ticket único, registrando de manera objetiva quién, cómo y cuándo se resolvió el problema.</li>
-              <li><strong>Monitoreo de ANS (Acuerdos de Nivel de Servicio):</strong> El sistema estructura parámetros lógicos para medir y evaluar los tiempos de atención, garantizando que se cumplan los estándares operativos del centro comercial.</li>
-              <li><strong>Dashboard Gerencial:</strong> Una interfaz analítica en tiempo real que visibiliza la carga de trabajo, tickets abiertos y métricas de desempeño, facilitando la toma de decisiones informadas.</li>
+              <li><strong>Reservas públicas:</strong> flujo claro para compra y confirmación de entradas.</li>
+              <li><strong>Dashboard administrativo:</strong> métricas, gráficos y control de reservas desde un único lugar.</li>
+              <li><strong>Gestión multi-parque:</strong> soporte para diferentes sedes y configuraciones operativas.</li>
             </ul>
           </>
         )
       },
       {
-        id: "arquitectura",
-        title: "Arquitectura y Desarrollo",
+        id: "tecnologia",
+        title: "Arquitectura y Stack",
         content: (
           <>
             <p>
-              Sentinel Core está construido sobre una arquitectura moderna que prioriza la automatización y la persistencia segura de la información.
+              El proyecto fue construido con una arquitectura full stack moderna, separando frontend y backend para facilitar mantenimiento, despliegue y escalabilidad.
             </p>
             <p>
-              El frontend, desarrollado con <strong>React</strong> y estandarizado visualmente con <strong>Tailwind CSS</strong>, ofrece una experiencia de usuario fluida e intuitiva tanto para el personal técnico como administrativo. En el backend, la lógica de negocio y la API están fuertemente tipadas con <strong>TypeScript</strong> y conectadas a una base de datos relacional <strong>PostgreSQL</strong>, asegurando la integridad referencial y la rápida consulta de datos históricos para auditorías.
+              El frontend se despliega en Vercel, el backend en Render y la base de datos se gestiona con MongoDB Atlas, ofreciendo una solución completa y lista para producción.
             </p>
           </>
         )
@@ -169,17 +170,89 @@ const projects: Project[] = [
         )
       }
     ]
+  },
+  {
+    id: "sentinel-core",
+    title: "Sentinel Core",
+    subtitle: "Sistema de Gestión de Incidencias y Monitoreo de ANS (SLA)",
+    date: "Jun 2026",
+    readTime: "4 min lectura",
+    views: "1.2k vistas",
+    comments: "42 comentarios",
+    image: screenshotSentinel,
+    logo: sentinelLogo,
+    themeColor: "rgba(59, 130, 246, 1)",
+    rgb: "59, 130, 246",
+    tech: [
+      { id: "react", name: "React 19" },
+      { id: "typescript", name: "TypeScript" },
+      { id: "nodejs", name: "Node.js" },
+      { id: "postgresql", name: "PostgreSQL" },
+      { id: "tailwindcss", name: "Tailwind CSS" }
+    ],
+    github: "https://github.com/GiuDPC/sentinel-core",
+    demo: "https://sentinel-core.vercel.app/",
+    sections: [
+      {
+        id: "introduccion",
+        title: "El Problema Operativo",
+        content: (
+          <>
+            <p>
+              En infraestructuras comerciales de gran escala, como el <strong>Centro Comercial Sambil Paraguaná</strong>, la gestión operativa suele verse fragmentada por la dependencia de canales de comunicación informales (como WhatsApp) y registros manuales en papel.
+            </p>
+            <p>
+              Esta desconexión genera "silos de información" donde se pierde por completo la trazabilidad de las tareas. Sin un registro auditable, resulta técnicamente inviable monitorear el desempeño operativo, medir tiempos de respuesta o garantizar la correcta asignación de técnicos a las fallas reportadas.
+            </p>
+          </>
+        )
+      },
+      {
+        id: "solucion",
+        title: "La Solución: Sentinel Core",
+        content: (
+          <>
+            <p>
+              Para resolver esta problemática, diseñé y desarrollé <strong>Sentinel Core</strong>: un sistema centralizado de gestión de incidencias que sustituye la informalidad por un flujo de trabajo estructurado y completamente auditable.
+            </p>
+            <ul>
+              <li><strong>Trazabilidad Absoluta:</strong> Cada incidencia reportada genera un ticket único, registrando de manera objetiva quién, cómo y cuándo se resolvió el problema.</li>
+              <li><strong>Monitoreo de ANS (Acuerdos de Nivel de Servicio):</strong> El sistema estructura parámetros lógicos para medir y evaluar los tiempos de atención, garantizando que se cumplan los estándares operativos del centro comercial.</li>
+              <li><strong>Dashboard Gerencial:</strong> Una interfaz analítica en tiempo real que visibiliza la carga de trabajo, tickets abiertos y métricas de desempeño, facilitando la toma de decisiones informadas.</li>
+            </ul>
+          </>
+        )
+      },
+      {
+        id: "arquitectura",
+        title: "Arquitectura y Desarrollo",
+        content: (
+          <>
+            <p>
+              Sentinel Core está construido sobre una arquitectura moderna que prioriza la automatización y la persistencia segura de la información.
+            </p>
+            <p>
+              El frontend, desarrollado con <strong>React</strong> y estandarizado visualmente con <strong>Tailwind CSS</strong>, ofrece una experiencia de usuario fluida e intuitiva tanto para el personal técnico como administrativo. En el backend, la lógica de negocio y la API están fuertemente tipadas con <strong>TypeScript</strong> y conectadas a una base de datos relacional <strong>PostgreSQL</strong>, asegurando la integridad referencial y la rápida consulta de datos históricos para auditorías.
+            </p>
+          </>
+        )
+      }
+    ]
   }
 ]
 
 /* ──── Project Card ──── */
 function ProjectCard({ project, onClick }: { project: Project; onClick: () => void }) {
+  const { resolvedTheme } = useTheme()
+  const isLightMode = resolvedTheme === "light"
+  const logoSrc = project.id === "sentinel-core" && isLightMode ? illustrationTwo : project.logo
+
   return (
     <motion.article
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 8 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClick}
       className="group cursor-pointer relative z-10"
     >
@@ -220,7 +293,7 @@ function ProjectCard({ project, onClick }: { project: Project; onClick: () => vo
             
             <div className="flex items-center gap-3 mb-2">
               <img 
-                src={project.logo} 
+                src={logoSrc} 
                 alt="" 
                 className="w-7 h-7 object-contain"
                 style={{ filter: `drop-shadow(0 0 6px rgba(${project.rgb}, 0.35))` }}
@@ -551,7 +624,15 @@ export function Projects() {
   return (
     <>
       <section id="projects" className="flex flex-col items-center space-y-10 relative z-10 pt-8">
-        <h2 className="section-title">Proyectos Destacados</h2>
+        <motion.h2
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="section-title"
+        >
+          Proyectos Destacados
+        </motion.h2>
 
         <div className="w-full max-w-4xl space-y-5">
           {projects.map((project) => (

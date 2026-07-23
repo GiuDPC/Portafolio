@@ -66,24 +66,15 @@ function MainContent() {
       {/* Dark mode effects — permanently mounted, toggled via opacity */}
       <DarkEffects isDark={isDark} />
 
-      {/* Subtle light mode ambient */}
-      <div 
-        className={`fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000 ${!isDark ? 'opacity-100' : 'opacity-0'}`} 
-        aria-hidden="true"
-      >
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-amber-100/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-sky-100/15 rounded-full blur-[100px]" />
-      </div>
-
       <Navbar />
 
       <main className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pt-28 pb-16">
         <div className="space-y-24 md:space-y-32">
           <Hero />
           <SectionDivider />
-          <Projects />
-          <SectionDivider />
           <TechStack />
+          <SectionDivider />
+          <Projects />
           <SectionDivider />
           <Education />
         </div>

@@ -9,14 +9,19 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40)
+      if (window.scrollY > 40) {
+        setMobileOpen(false)
+      }
+    }
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
   const links = [
-    { href: "#projects", label: "Proyectos", id: "projects" },
     { href: "#tech", label: "Tecnologías", id: "tech" },
+    { href: "#projects", label: "Proyectos", id: "projects" },
     { href: "#education", label: "Educación", id: "education" },
   ]
 

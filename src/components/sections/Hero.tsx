@@ -66,15 +66,29 @@ export function Hero() {
     <>
       <section id="about" className="flex flex-col items-center text-center space-y-8 pt-6">
         {/* Title */}
-        <div>
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.08, duration: 0.45 }}
+        >
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">
             Backend Developer
           </h1>
-          <div className="mt-3 h-[3px] w-40 mx-auto bg-yellow-400 rounded-full" />
-        </div>
+          <motion.div
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ delay: 0.16, duration: 0.35 }}
+            className="mt-3 h-[3px] w-40 mx-auto bg-yellow-400 rounded-full origin-center"
+          />
+        </motion.div>
 
         {/* Social links */}
-        <div className="flex flex-wrap items-center justify-center gap-8 text-muted-foreground text-sm">
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.18, duration: 0.42 }}
+          className="flex flex-wrap items-center justify-center gap-8 text-muted-foreground text-sm"
+        >
           <a
             href="https://github.com/GiuDPC"
             target="_blank"
@@ -105,10 +119,15 @@ export function Hero() {
               {copied ? <span className="text-emerald-400 font-medium">Copied!</span> : "Email"}
             </span>
           </button>
-        </div>
+        </motion.div>
 
         {/* About */}
-        <div className="max-w-3xl mt-6 text-left space-y-4">
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.24, duration: 0.45 }}
+          className="max-w-3xl mt-6 text-left space-y-4"
+        >
           <p className="text-[15px] leading-relaxed text-muted-foreground">
             Ingeniero de Sistemas especializado en <span className="tech-yellow">Backend Development</span> y{" "}
             <span className="tech-green">Arquitectura de Software</span>. Construyo sistemas robustos
@@ -122,7 +141,7 @@ export function Hero() {
             <span className="tech-green">PostgreSQL</span> y{" "}
             <span className="tech-cyan">SQL</span>.
           </p>
-        </div>
+        </motion.div>
       </section>
 
       <CopyToast show={copied} onDone={() => setCopied(false)} />

@@ -8,13 +8,21 @@ const skills = [
 export function Education() {
   return (
     <section id="education" className="flex flex-col items-center space-y-10 relative z-10">
-      <h2 className="section-title">Educación</h2>
+      <motion.h2
+        initial={{ opacity: 0, y: 8 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className="section-title"
+      >
+        Educación
+      </motion.h2>
 
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
         className="w-full max-w-4xl"
       >
         <div className="bg-card/70 dark:bg-card/50 backdrop-blur-md border border-border/50 dark:border-white/[0.06] rounded-2xl p-6 md:p-8 space-y-6 shadow-sm dark:shadow-black/10">

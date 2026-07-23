@@ -6,6 +6,7 @@
 
 @layer base {
   :root {
+    color-scheme: light;
     --background: 40 35% 96%; /* Much warmer, slightly more saturated paper tone */
     --foreground: 220 30% 12%;
     --card: 40 25% 94%;
@@ -30,6 +31,7 @@
   }
 
   .dark {
+    color-scheme: dark;
     --background: 225 20% 7%;
     --foreground: 210 20% 95%;
     --card: 225 20% 9%;
@@ -59,6 +61,7 @@
   html {
     scroll-behavior: smooth;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    scroll-padding-top: 6rem;
   }
   body {
     @apply bg-background text-foreground antialiased;

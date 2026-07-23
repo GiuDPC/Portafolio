@@ -1,5 +1,6 @@
-import StackIcon from "tech-stack-icons"
 import { motion } from "framer-motion"
+import StackIcon from "tech-stack-icons"
+import LogoLoop from "../LogoLoop"
 
 const techStack = [
   { id: "go", name: "Go" },
@@ -21,50 +22,46 @@ const techStack = [
   { id: "vitejs", name: "Vite" }
 ]
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.04,
-    },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 16, scale: 0.95 },
-  visible: { 
-    opacity: 1, y: 0, scale: 1,
-    transition: { type: "spring" as const, stiffness: 400, damping: 24 } 
-  },
-}
+const techLogos = techStack.map((tech) => ({
+  title: tech.name,
+  node: <StackIcon name={tech.id as any} className="h-7 w-7" />,
+  href: undefined,
+}))
 
 export function TechStack() {
   return (
-    <section id="tech" className="flex flex-col items-center space-y-10 relative z-10">
-      <h2 className="section-title">Tecnologías</h2>
+    <section id="tech" className="flex flex-col items-center space-y-8 relative z-10">
+      <motion.h2
+        initial={{ opacity: 0, y: 8 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className="section-title"
+      >
+        Tecnologías
+      </motion.h2>
 
       <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        className="w-full max-w-4xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full max-w-4xl"
       >
-        {techStack.map((tech) => (
-          <motion.div
-            variants={itemVariants}
-            key={tech.id}
-            className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-card/70 dark:bg-card/50 sm:backdrop-blur-md border border-border/50 dark:border-white/[0.06] hover:bg-card dark:hover:bg-card/80 hover:border-border dark:hover:border-white/15 hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 transition-all duration-300 group cursor-default"
-          >
-            <div className="w-7 h-7 shrink-0 transition-transform duration-400 will-change-transform group-hover:scale-110 group-hover:-translate-y-0.5">
-              <StackIcon name={tech.id as any} className="w-full h-full" />
-            </div>
-            <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-200">
-              {tech.name}
-            </span>
-          </motion.div>
-        ))}
+        <LogoLoop
+          logos={techLogos}
+          speed={90}
+          direction="left"
+          logoHeight={44}
+          gap={24}
+          hoverSpeed={0}
+          fadeOut
+          fadeOutColor="var(--background)"
+          scaleOnHover
+          ariaLabel="Tecnologías"
+          className="h-[96px] px-4 py-4"
+          style={{ backgroundColor: "transparent" }}
+        />
       </motion.div>
     </section>
   )
