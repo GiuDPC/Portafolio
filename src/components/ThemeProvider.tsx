@@ -73,6 +73,11 @@ export function ThemeProvider({
     })
 
     transition.ready.then(() => {
+      // Si es mobile, evitamos el clipPath (que es costoso) y dejamos que haga
+      // el crossfade por defecto suave del View Transition API
+      const isMobile = window.innerWidth <= 768
+      if (isMobile) return
+
       const x = event.clientX
       const y = event.clientY
       const endRadius = Math.hypot(

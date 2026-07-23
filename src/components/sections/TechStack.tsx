@@ -50,13 +50,12 @@ export function TechStack() {
       >
         <LogoLoop
           logos={techLogos}
-          speed={90}
+          speed={30}
           direction="left"
           logoHeight={44}
           gap={24}
           hoverSpeed={0}
-          fadeOut
-          fadeOutColor="var(--background)"
+          fadeOut={false}
           scaleOnHover
           ariaLabel="Tecnologías"
           className="h-[96px] px-4 py-4"

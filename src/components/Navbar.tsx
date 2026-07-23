@@ -107,11 +107,18 @@ export function Navbar() {
                   <a
                     key={link.href}
                     href={link.href}
-                    onClick={() => setMobileOpen(false)}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setMobileOpen(false)
+                      const target = document.querySelector(link.href)
+                      if (target) {
+                        target.scrollIntoView({ behavior: "smooth" })
+                      }
+                    }}
                     className={`text-sm font-medium px-4 py-2.5 rounded-xl transition-all duration-300 ${
                       isActive
                         ? "text-foreground bg-secondary/80 dark:bg-white/10"
-                        : "text-muted-foreground hover:text-foreground hover:bg-secondary/40 dark:hover:bg-white/5"
+                        : "text-muted-foreground active:text-foreground active:bg-secondary/40 dark:active:bg-white/5"
                     }`}
                   >
                     {link.label}
