@@ -107,14 +107,7 @@ export function Navbar() {
                   <a
                     key={link.href}
                     href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      setMobileOpen(false)
-                      const target = document.querySelector(link.href)
-                      if (target) {
-                        target.scrollIntoView({ behavior: "smooth" })
-                      }
-                    }}
+                    onClick={() => setMobileOpen(false)}
                     className={`text-sm font-medium px-4 py-2.5 rounded-xl transition-all duration-300 ${
                       isActive
                         ? "text-foreground bg-secondary/80 dark:bg-white/10"
