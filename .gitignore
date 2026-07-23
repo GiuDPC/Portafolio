@@ -1,0 +1,55 @@
+# ─── Dependencies ───
+node_modules
+.pnp
+.pnp.js
+
+# ─── Build output ───
+dist
+dist-ssr
+
+# ─── Environment & secrets ───
+.env
+.env.*
+!.env.example
+*.key
+keys.txt
+secrets.*
+*.pem
+
+# ─── Logs ───
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ─── Editor ───
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.swp
+*.swo
+*~
+
+# ─── OS ───
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ─── TypeScript ───
+*.tsbuildinfo
+
+# ─── Local env overrides ───
+*.local
+
+# ─── IDE project files ───
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ─── Reference / design assets (not for production) ───
+referencias/
