@@ -198,3 +198,86 @@
 
 /* ═══════ Prose overrides for light mode ═══════ */
 :root .prose { --tw-prose-body: hsl(230, 10%, 30%); }
+
+/* ═══════ Hero Logo ═══════ */
+.hero-logo-img {
+  position: relative;
+  z-index: 2;
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.08));
+  transition: filter 0.5s ease;
+}
+
+@media (min-width: 768px) {
+  .hero-logo-img {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+/* Dark mode: brighten the grey logo and add a subtle glow */
+.dark .hero-logo-img {
+  filter:
+    brightness(1.7)
+    contrast(1.1)
+    drop-shadow(0 0 30px rgba(14, 165, 233, 0.25))
+    drop-shadow(0 0 60px rgba(139, 92, 246, 0.15));
+}
+
+/* Glow backdrop — radial gradient that pulses in dark mode */
+.hero-logo-glow {
+  position: absolute;
+  inset: -40%;
+  z-index: 1;
+  border-radius: 50%;
+  opacity: 0;
+  background: radial-gradient(
+    circle,
+    rgba(14, 165, 233, 0.15) 0%,
+    rgba(139, 92, 246, 0.10) 40%,
+    transparent 70%
+  );
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.dark .hero-logo-glow {
+  opacity: 1;
+  animation: heroGlowPulse 4s ease-in-out infinite;
+}
+
+@keyframes heroGlowPulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+/* Light mode: subtle warm shadow behind logo */
+:root .hero-logo-glow {
+  opacity: 0.4;
+  background: radial-gradient(
+    circle,
+    rgba(234, 179, 8, 0.08) 0%,
+    rgba(0, 0, 0, 0.03) 50%,
+    transparent 70%
+  );
+}
+
+/* ═══════ Footer Logo ═══════ */
+.footer-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  opacity: 0.6;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.footer-logo:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.dark .footer-logo {
+  filter: brightness(1.6) contrast(1.1);
+}

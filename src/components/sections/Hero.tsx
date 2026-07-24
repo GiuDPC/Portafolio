@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Check, Mail } from "lucide-react"
 import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
+import logoSrc from "../../assets/GiuDPC-Logo.png"
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -65,6 +66,26 @@ export function Hero() {
   return (
     <>
       <section id="about" className="flex flex-col items-center text-center space-y-8 pt-6">
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.02 }}
+          className="relative"
+        >
+          {/* Glow backdrop */}
+          <div className="hero-logo-glow" aria-hidden="true" />
+          {/* Logo image */}
+          <motion.img
+            src={logoSrc}
+            alt="GiuDPC — Giuseppe Poliandri"
+            className="hero-logo-img"
+            draggable={false}
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </motion.div>
+
         {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}

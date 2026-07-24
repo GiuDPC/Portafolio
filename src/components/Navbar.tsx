@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo, useCallback } from "react"
 import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useActiveSection } from "../hooks/useActiveSection"
+import logoSrc from "../assets/GiuDPC-Logo.png"
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -53,11 +54,24 @@ export function Navbar() {
       <div className={`flex items-center justify-between transition-all duration-500 ${scrolled ? "" : "max-w-5xl mx-auto"}`}>
         <a
           href="#"
-          className={`font-bold tracking-tight text-foreground hover:opacity-80 transition-all duration-300 ${
-            scrolled ? "text-base" : "text-lg"
-          }`}
+          className="group flex items-center gap-2.5 hover:opacity-90 transition-all duration-300"
+          aria-label="Go to top"
         >
-          Giuseppe Poliandri
+          <img
+            src={logoSrc}
+            alt="GiuDPC Logo"
+            className={`transition-all duration-500 ease-out dark:brightness-[1.6] dark:contrast-[1.1] ${
+              scrolled ? "w-7 h-7" : "w-9 h-9"
+            }`}
+            draggable={false}
+          />
+          <span
+            className={`font-bold tracking-tight text-foreground transition-all duration-300 ${
+              scrolled ? "text-sm opacity-0 w-0 overflow-hidden" : "text-base opacity-100"
+            }`}
+          >
+            Giuseppe Poliandri
+          </span>
         </a>
 
         {/* Desktop links */}

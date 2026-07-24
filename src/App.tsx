@@ -7,6 +7,7 @@ import { Education } from "./components/sections/Experience"
 import { Projects } from "./components/sections/Projects"
 import { TechStack } from "./components/sections/TechStack"
 import { memo } from "react"
+import logoSrc from "./assets/GiuDPC-Logo.png"
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -82,13 +83,16 @@ function MainContent() {
 
       <footer className="relative z-10 border-t border-border/40 bg-background/80 backdrop-blur-sm">
         <div className="max-w-5xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm font-medium text-muted-foreground">
-            <a href="https://github.com/GiuDPC" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">
-              Github
-            </a>
-            <span className="mx-3 opacity-40">•</span>
-            © {new Date().getFullYear()} Giuseppe Poliandri
-          </p>
+          <div className="flex items-center gap-3">
+            <img src={logoSrc} alt="" className="footer-logo" draggable={false} aria-hidden="true" />
+            <p className="text-sm font-medium text-muted-foreground">
+              <a href="https://github.com/GiuDPC" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">
+                Github
+              </a>
+              <span className="mx-3 opacity-40">•</span>
+              © {new Date().getFullYear()} Giuseppe Poliandri
+            </p>
+          </div>
           <a href="https://github.com/GiuDPC" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground transition-all duration-300">
             <GithubIcon className="w-5 h-5" />
           </a>
