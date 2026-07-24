@@ -10,6 +10,7 @@ import illustrationTwo from "../../assets/Ilustración2.png"
 import graphCoreLogo from "../../assets/graph-core-logo.png"
 import screenshotSentinel from "../../assets/screenshot-sentinel.png"
 import screenshotGraphCore from "../../assets/screenshot-graphcore.png"
+import brincaparkHero from "../../assets/Hero-section.png"
 
 interface TechBadge {
   id: string
@@ -60,7 +61,7 @@ const projects: Project[] = [
     title: "Brincapark",
     subtitle: "Sistema integral de gestión de reservas para parques de diversiones",
     date: "Ago 2025",
-    image: "https://raw.githubusercontent.com/GiuDPC/brincapark-reservation-system/main/docs/screenshots/Hero-section.png",
+    image: brincaparkHero,
     logo: "https://raw.githubusercontent.com/GiuDPC/brincapark-reservation-system/main/frontend/assets/img/Logo.png",
     themeColor: "rgb(56, 189, 248)",
     rgb: "56, 189, 248",
@@ -386,6 +387,8 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
   const [mounted, setMounted] = useState(false)
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === "dark"
+  const isLightMode = resolvedTheme === "light"
+  const logoSrc = project.id === "sentinel-core" && isLightMode ? illustrationTwo : project.logo
 
   const sectionIds = project.sections.map(s => s.id)
   const activeSection = useScrollSpy(contentRef, sectionIds)
@@ -470,7 +473,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
               {/* Title with logo */}
               <div className="flex items-center gap-4 md:gap-5 mb-3">
                 <img 
-                  src={project.logo} 
+                  src={logoSrc} 
                   alt="Logo" 
                   className="w-11 h-11 md:w-12 md:h-12 object-contain"
                   style={{ filter: `drop-shadow(0 0 10px rgba(${project.rgb}, 0.35))` }}
