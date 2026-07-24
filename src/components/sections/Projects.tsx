@@ -27,9 +27,6 @@ interface Project {
   title: string
   subtitle: string
   date: string
-  readTime: string
-  views: string
-  comments: string
   image: string
   logo: string
   themeColor: string
@@ -40,15 +37,29 @@ interface Project {
   sections: ArticleSection[]
 }
 
+const extractText = (node: React.ReactNode): string => {
+  if (typeof node === 'string') return node;
+  if (typeof node === 'number') return node.toString();
+  if (Array.isArray(node)) return node.map(extractText).join(' ');
+  if (node && typeof node === 'object' && 'props' in node) {
+    return extractText((node as any).props.children);
+  }
+  return '';
+};
+
+const calculateReadTime = (project: Project): string => {
+  const text = project.subtitle + ' ' + project.sections.map(s => s.title + ' ' + extractText(s.content)).join(' ');
+  const words = text.trim().split(/\s+/).length;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return `${minutes} min lectura`;
+};
+
 const projects: Project[] = [
   {
     id: "brincapark",
     title: "Brincapark",
     subtitle: "Sistema integral de gestión de reservas para parques de diversiones",
     date: "Ago 2025",
-    readTime: "6 min lectura",
-    views: "2.8k vistas",
-    comments: "89 comentarios",
     image: "https://raw.githubusercontent.com/GiuDPC/brincapark-reservation-system/main/docs/screenshots/Hero-section.png",
     logo: "https://raw.githubusercontent.com/GiuDPC/brincapark-reservation-system/main/frontend/assets/img/Logo.png",
     themeColor: "rgb(56, 189, 248)",
@@ -114,9 +125,6 @@ const projects: Project[] = [
     title: "GraphCore",
     subtitle: "Entorno Virtual de Aprendizaje Interactivo para Teoría de Grafos",
     date: "Jul 2026",
-    readTime: "5 min lectura",
-    views: "3.4k vistas",
-    comments: "156 comentarios",
     image: screenshotGraphCore,
     logo: graphCoreLogo,
     themeColor: "rgba(16, 185, 129, 1)",
@@ -176,9 +184,6 @@ const projects: Project[] = [
     title: "Sentinel Core",
     subtitle: "Sistema de Gestión de Incidencias y Monitoreo de ANS (SLA)",
     date: "Jun 2026",
-    readTime: "4 min lectura",
-    views: "1.2k vistas",
-    comments: "42 comentarios",
     image: screenshotSentinel,
     logo: sentinelLogo,
     themeColor: "rgba(59, 130, 246, 1)",
@@ -288,7 +293,7 @@ function ProjectCard({ project, onClick }: { project: Project; onClick: () => vo
             <div className="flex items-center gap-3 text-[11px] text-muted-foreground mb-3 font-medium tracking-wide uppercase">
               <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {project.date}</span>
               <span className="opacity-25">•</span>
-              <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {project.readTime}</span>
+              <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {calculateReadTime(project)}</span>
             </div>
             
             <div className="flex items-center gap-3 mb-2">
@@ -459,7 +464,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
               {/* Meta */}
               <div className="flex items-center gap-4 text-[11px] font-medium text-muted-foreground mb-5 uppercase tracking-wider">
                 <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> {project.date}</span>
-                <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> {project.readTime}</span>
+                <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> {calculateReadTime(project)}</span>
               </div>
 
               {/* Title with logo */}
@@ -480,12 +485,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
               </p>
 
               {/* Stats & links */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs font-medium text-muted-foreground mb-8 pb-5 border-b border-border/30 dark:border-white/10 gap-4">
-                <div className="flex items-center gap-3">
-                  <span>{project.views}</span>
-                  <span className="opacity-20">|</span>
-                  <span>{project.comments}</span>
-                </div>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-end text-xs font-medium text-muted-foreground mb-8 pb-5 border-b border-border/30 dark:border-white/10 gap-4">
                 
                 <div className="flex items-center gap-2.5">
                   <a 
