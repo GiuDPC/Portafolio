@@ -9,7 +9,6 @@ const techStack = [
   { id: "nodejs", name: "Node.js" },
   { id: "react", name: "React" },
   { id: "c++", name: "C++" },
-  { id: "python", name: "Python" },
   { id: "postgresql", name: "PostgreSQL" },
   { id: "mongodb", name: "MongoDB" },
   { id: "docker", name: "Docker" },
