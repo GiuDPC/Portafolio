@@ -3,7 +3,6 @@ import StackIcon from "tech-stack-icons"
 import LogoLoop from "../LogoLoop"
 
 const techStack = [
-  { id: "go", name: "Go" },
   { id: "typescript", name: "TypeScript" },
   { id: "js", name: "JavaScript" },
   { id: "nodejs", name: "Node.js" },
