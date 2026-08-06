@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { Check, Mail } from "lucide-react"
 import { createPortal } from "react-dom"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, type Variants } from "framer-motion"
 import logoSrc from "../../assets/GiuDPC-Logo.png"
 
 function GithubIcon({ className }: { className?: string }) {
@@ -21,14 +21,14 @@ function LinkedinIcon({ className }: { className?: string }) {
 }
 
 /* ── Stagger container ── */
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: {},
   visible: {
     transition: { staggerChildren: 0.08, delayChildren: 0.05 }
   }
 }
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 16 },
   visible: { 
     opacity: 1, y: 0,
