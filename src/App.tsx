@@ -74,25 +74,25 @@ function MainContent() {
 
       <Navbar />
 
-      <main className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pt-28 pb-16">
-        <div className="space-y-24 md:space-y-32">
+      <main className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-12 sm:pb-16">
+        <div className="space-y-16 sm:space-y-24 md:space-y-32">
           <Hero />
           <SectionDivider />
-          <Suspense fallback={<div className="h-64 animate-pulse bg-secondary/50 rounded-xl" />}>
+          <Suspense fallback={<div className="h-24 animate-pulse bg-muted/40 rounded-2xl" />}>
             <TechStack />
           </Suspense>
           <SectionDivider />
-          <Suspense fallback={<div className="h-96 animate-pulse bg-secondary/50 rounded-xl" />}>
+          <Suspense fallback={<div className="h-64 animate-pulse bg-muted/40 rounded-2xl" />}>
             <Projects />
           </Suspense>
           <SectionDivider />
-          <Suspense fallback={<div className="h-64 animate-pulse bg-secondary/50 rounded-xl" />}>
+          <Suspense fallback={<div className="h-48 animate-pulse bg-muted/40 rounded-2xl" />}>
             <Education />
           </Suspense>
         </div>
       </main>
 
-      <footer className="relative z-10 border-t border-border/40 bg-background/80 backdrop-blur-sm">
+      <footer className="relative z-10 border-t border-border bg-card/50 dark:bg-transparent backdrop-blur-sm">
         <div className="max-w-5xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <img src={logoSrc} alt="" className="footer-logo" draggable={false} aria-hidden="true" />
@@ -104,7 +104,7 @@ function MainContent() {
               © {new Date().getFullYear()} Giuseppe Poliandri
             </p>
           </div>
-          <a href="https://github.com/GiuDPC" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground transition-all duration-300">
+          <a href="https://github.com/GiuDPC" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-muted/60 dark:bg-white/5 text-muted-foreground hover:bg-muted hover:text-foreground transition-all duration-300 border border-border dark:border-white/10">
             <GithubIcon className="w-5 h-5" />
           </a>
         </div>

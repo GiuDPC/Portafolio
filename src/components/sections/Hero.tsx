@@ -20,6 +20,22 @@ function LinkedinIcon({ className }: { className?: string }) {
   )
 }
 
+/* ── Stagger container ── */
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08, delayChildren: 0.05 }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { 
+    opacity: 1, y: 0,
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+  }
+}
+
 /* ── Floating Toast ── */
 function CopyToast({ show, onDone }: { show: boolean; onDone: () => void }) {
   useEffect(() => {
@@ -39,9 +55,9 @@ function CopyToast({ show, onDone }: { show: boolean; onDone: () => void }) {
           transition={{ type: "spring", stiffness: 500, damping: 30 }}
           className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[9999] pointer-events-none"
         >
-          <div className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-card/90 backdrop-blur-xl border border-border/50 shadow-2xl shadow-black/20 dark:shadow-black/40">
+          <div className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-card backdrop-blur-xl border border-border shadow-lg dark:shadow-2xl dark:shadow-black/40">
             <div className="w-8 h-8 rounded-full bg-emerald-500/15 flex items-center justify-center">
-              <Check className="w-4 h-4 text-emerald-400" />
+              <Check className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
             </div>
             <div>
               <p className="text-sm font-semibold text-foreground">Email copied!</p>
@@ -65,14 +81,15 @@ export function Hero() {
 
   return (
     <>
-      <section id="about" className="flex flex-col items-center text-center space-y-8 pt-6">
+      <motion.section
+        id="about"
+        className="flex flex-col items-center text-center space-y-6 sm:space-y-8 pt-4 sm:pt-6"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {/* Logo */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.02 }}
-          className="relative"
-        >
+        <motion.div variants={itemVariants} className="relative">
           {/* Glow backdrop */}
           <div className="hero-logo-glow" aria-hidden="true" />
           {/* Logo image */}
@@ -87,41 +104,36 @@ export function Hero() {
         </motion.div>
 
         {/* Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.08, duration: 0.45 }}
-        >
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">
+        <motion.div variants={itemVariants}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">
             Backend Developer
           </h1>
           <motion.div
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ delay: 0.16, duration: 0.35 }}
-            className="mt-3 h-[3px] w-40 mx-auto bg-yellow-400 rounded-full origin-center"
+            transition={{ delay: 0.3, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-3 h-[3px] w-32 sm:w-40 mx-auto rounded-full origin-center"
+            style={{ background: "hsl(var(--yellow))" }}
           />
         </motion.div>
 
         {/* Social links */}
         <motion.div
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.18, duration: 0.42 }}
-          className="flex flex-wrap items-center justify-center gap-8 text-muted-foreground text-sm"
+          variants={itemVariants}
+          className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-muted-foreground text-sm"
         >
           <a
             href="https://github.com/GiuDPC"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 hover:text-foreground transition-colors duration-200"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:text-foreground hover:bg-muted/60 transition-all duration-200"
           >
             <GithubIcon className="w-[18px] h-[18px]" />
             <span>Github</span>
           </a>
           <a
             href="#"
-            className="flex items-center gap-2 hover:text-foreground transition-colors duration-200 opacity-40 cursor-not-allowed"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg opacity-40 cursor-not-allowed"
             title="Coming soon"
           >
             <LinkedinIcon className="w-[18px] h-[18px]" />
@@ -129,25 +141,23 @@ export function Hero() {
           </a>
           <button
             onClick={copyEmail}
-            className="group flex items-center gap-2 hover:text-foreground transition-all duration-300 cursor-pointer relative"
+            className="group flex items-center gap-2 px-3 py-1.5 rounded-lg hover:text-foreground hover:bg-muted/60 transition-all duration-200 cursor-pointer relative"
             title="Copy email"
           >
             <span className="relative w-[18px] h-[18px]">
               <Mail className={`w-[18px] h-[18px] absolute inset-0 transition-all duration-300 ${copied ? 'opacity-0 scale-75 rotate-12' : 'opacity-100 scale-100 rotate-0'}`} />
-              <Check className={`w-[18px] h-[18px] absolute inset-0 text-emerald-400 transition-all duration-300 ${copied ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-75 -rotate-12'}`} />
+              <Check className={`w-[18px] h-[18px] absolute inset-0 text-emerald-500 dark:text-emerald-400 transition-all duration-300 ${copied ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-75 -rotate-12'}`} />
             </span>
             <span className="transition-colors duration-300">
-              {copied ? <span className="text-emerald-400 font-medium">Copied!</span> : "Email"}
+              {copied ? <span className="text-emerald-500 dark:text-emerald-400 font-medium">Copied!</span> : "Email"}
             </span>
           </button>
         </motion.div>
 
         {/* About */}
         <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.24, duration: 0.45 }}
-          className="max-w-3xl mt-6 text-left space-y-4"
+          variants={itemVariants}
+          className="max-w-3xl mt-4 sm:mt-6 text-left space-y-4 px-2"
         >
           <p className="text-[15px] leading-relaxed text-muted-foreground">
             Ingeniero de Sistemas especializado en <span className="tech-yellow">Backend Development</span> y{" "}
@@ -163,7 +173,7 @@ export function Hero() {
             <span className="tech-cyan">SQL</span>.
           </p>
         </motion.div>
-      </section>
+      </motion.section>
 
       <CopyToast show={copied} onDone={() => setCopied(false)} />
     </>

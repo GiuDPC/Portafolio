@@ -7,27 +7,29 @@
 @layer base {
   :root {
     color-scheme: light;
-    --background: 0 0% 100%; /* Pure white */
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --background: 220 20% 97%;   /* warm blue-gray, NOT pure white */
+    --foreground: 224 71% 4%;
+    --card: 0 0% 100%;            /* pure white cards float */
+    --card-foreground: 224 71% 4%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 222 47% 11%;
+    --popover-foreground: 224 71% 4%;
+    --primary: 220 14% 10%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222 47% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222 47% 11.2%;
-    --destructive: 0 84.2% 60.2%;
+    --secondary: 220 14% 93%;
+    --secondary-foreground: 220 14% 10%;
+    --muted: 220 14% 93%;
+    --muted-foreground: 220 9% 43%;  /* darker muted for readability */
+    --accent: 220 14% 93%;
+    --accent-foreground: 220 14% 10%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 13% 87%;       /* visible but gentle */
+    --input: 220 13% 87%;
+    --ring: 224 71% 4%;
     --radius: 0.75rem;
-    --yellow: 45 100% 51%;
+    --yellow: 38 92% 50%;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06);
+    --card-shadow-hover: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
   }
 
   .dark {
@@ -46,11 +48,13 @@
     --muted-foreground: 215 15% 65%;
     --accent: 225 20% 12%;
     --accent-foreground: 210 20% 95%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
     --border: 225 20% 14%;
     --input: 225 20% 14%;
     --ring: 210 20% 95%;
+    --card-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    --card-shadow-hover: 0 12px 40px rgba(0,0,0,0.45);
   }
 }
 
@@ -85,10 +89,11 @@
 .scrollbar-none::-webkit-scrollbar { display: none; }
 .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ═══════ View Transitions — Circular Reveal ═══════ */
+/* ═══════ View Transitions — Circular Reveal from Toggle Button ═══════ */
+
+/* Disable the default crossfade — we drive the animation via JS WAAPI */
 ::view-transition-group(root) {
-  animation-duration: 0.5s;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation: none;
 }
 
 ::view-transition-new(root),
@@ -98,7 +103,15 @@
   display: block;
 }
 
-/* When switching to dark mode, the OLD view is on top and shrinks */
+/* Light mode expanding (Dark -> Light) - New view is on top */
+::view-transition-new(root) {
+  z-index: 1000;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+/* Dark mode shrinking (Light -> Dark) - Old view is on top */
 .dark::view-transition-old(root) {
   z-index: 1000;
 }
@@ -106,21 +119,18 @@
   z-index: 1;
 }
 
-/* When switching to light mode, the NEW view is on top and expands */
-::view-transition-old(root) {
-  z-index: 1;
-}
-::view-transition-new(root) {
-  z-index: 1000;
-}
-
-/* En lugar del universal selector con * (style recalc masivo),
-   solo desactivamos backdrop-filter en los elementos que realmente lo usan. */
+/* Disable heavy effects during transition to keep it buttery smooth */
 .is-transitioning .backdrop-blur-3xl,
+.is-transitioning .backdrop-blur-xl,
 .is-transitioning .backdrop-blur-md,
-.is-transitioning .backdrop-blur-sm {
+.is-transitioning .backdrop-blur-sm,
+.is-transitioning .navbar-glass {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+}
+/* Prevent canvas particles and rays from flickering */
+.is-transitioning canvas {
+  opacity: 0 !important;
 }
 
 /* ═══════ Section title ═══════ */
@@ -132,21 +142,42 @@
   text-decoration-thickness: 3px;
 }
 
+/* ═══════ Card utility — THE key to visible cards ═══════ */
+.card-elevated {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  box-shadow: var(--card-shadow);
+  transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-elevated:hover {
+  box-shadow: var(--card-shadow-hover);
+}
+.dark .card-elevated {
+  background: hsl(var(--card));
+  border-color: hsl(var(--border) / 0.6);
+}
+
 /* ═══════ Tech highlight colors ═══════ */
-.tech-yellow { color: #eab308; text-decoration: underline; text-underline-offset: 3px; }
-.tech-blue { color: #60a5fa; text-decoration: underline; text-underline-offset: 3px; }
-.tech-green { color: #34d399; text-decoration: underline; text-underline-offset: 3px; }
-.tech-purple { color: #a78bfa; text-decoration: underline; text-underline-offset: 3px; }
-.tech-orange { color: #fb923c; text-decoration: underline; text-underline-offset: 3px; }
-.tech-pink { color: #f472b6; text-decoration: underline; text-underline-offset: 3px; }
-.tech-red { color: #f87171; text-decoration: underline; text-underline-offset: 3px; }
-.tech-cyan { color: #22d3ee; text-decoration: underline; text-underline-offset: 3px; }
+.tech-yellow { color: #eab308; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: currentColor; text-decoration-thickness: 1.5px; }
+.tech-blue { color: #60a5fa; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: currentColor; text-decoration-thickness: 1.5px; }
+.tech-green { color: #34d399; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: currentColor; text-decoration-thickness: 1.5px; }
+.tech-purple { color: #a78bfa; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: currentColor; text-decoration-thickness: 1.5px; }
+.tech-orange { color: #fb923c; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: currentColor; text-decoration-thickness: 1.5px; }
+.tech-pink { color: #f472b6; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: currentColor; text-decoration-thickness: 1.5px; }
+.tech-red { color: #f87171; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: currentColor; text-decoration-thickness: 1.5px; }
+.tech-cyan { color: #22d3ee; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: currentColor; text-decoration-thickness: 1.5px; }
 
 /* Light mode: make tech colors darker for readability */
-:root .tech-blue { color: #3b82f6; }
-:root .tech-green { color: #059669; }
-:root .tech-purple { color: #7c3aed; }
-:root .tech-cyan { color: #0891b2; }
+:root .tech-yellow { color: #b45309; } /* Amber-700 — highest contrast */
+:root .tech-blue { color: #1d4ed8; }   /* Blue-700 */
+:root .tech-green { color: #047857; }  /* Emerald-700 */
+:root .tech-purple { color: #6d28d9; } /* Violet-700 */
+:root .tech-orange { color: #c2410c; } /* Orange-700 */
+:root .tech-cyan { color: #0e7490; }   /* Cyan-700 */
+:root .tech-pink { color: #be185d; }   /* Pink-700 */
+:root .tech-red { color: #b91c1c; }    /* Red-700 */
 
 /* ═══════ Animations ═══════ */
 @keyframes fadeInUp {
@@ -197,7 +228,7 @@
 }
 
 /* ═══════ Prose overrides for light mode ═══════ */
-:root .prose { --tw-prose-body: hsl(230, 10%, 30%); }
+:root .prose { --tw-prose-body: hsl(224, 71%, 4%); }
 
 /* ═══════ Hero Logo ═══════ */
 .hero-logo-img {
@@ -280,4 +311,30 @@
 
 .dark .footer-logo {
   filter: brightness(1.6) contrast(1.1);
+}
+
+/* ═══════ Navbar glassmorphism — light mode ═══════ */
+.navbar-glass {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 4px 16px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+}
+.dark .navbar-glass {
+  background: rgba(10, 12, 18, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+}
+
+/* ═══════ Utility: smooth expo easing ═══════ */
+.ease-smooth {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }

@@ -28,7 +28,7 @@ describe('ThemeToggle Component', () => {
     })
 
     render(<ThemeToggle />)
-    const button = screen.getByRole('button', { name: /toggle theme/i })
+    const button = screen.getByRole('button', { name: /switch to dark mode/i })
     
     fireEvent.click(button)
     expect(mockSetTheme).toHaveBeenCalledWith('dark', expect.anything())

@@ -320,38 +320,38 @@ function ProjectCard({ project, onClick }: { project: Project; onClick: () => vo
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 8 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClick}
       className="group cursor-pointer relative z-10"
     >
-      <div className="relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1">
+      <div className="relative rounded-2xl overflow-hidden transition-transform duration-500 ease-smooth hover:-translate-y-1.5">
         {/* Outer ambient glow on hover */}
         <div 
-          className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10 blur-xl"
-          style={{ background: `radial-gradient(ellipse at 30% 50%, rgba(${project.rgb}, 0.2) 0%, transparent 70%)` }}
+          className="absolute -inset-1 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10 blur-2xl"
+          style={{ background: `radial-gradient(ellipse at 30% 50%, rgba(${project.rgb}, ${isLightMode ? 0.12 : 0.25}) 0%, transparent 70%)` }}
         />
 
-        <div className="relative bg-card/90 dark:bg-card/50 backdrop-blur-md border border-border/80 dark:border-white/[0.06] rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-md dark:shadow-black/20 group-hover:shadow-xl group-hover:shadow-black/5 dark:group-hover:shadow-black/30 transition-shadow duration-500">
+        <div className="card-elevated relative overflow-hidden flex flex-col md:flex-row group-hover:shadow-[var(--card-shadow-hover)]">
           
           {/* Image — full bleed */}
-          <div className="relative md:w-[44%] overflow-hidden bg-secondary/20 dark:bg-black/20">
+          <div className="relative md:w-[44%] overflow-hidden bg-muted/30 dark:bg-black/20">
             {/* Glow behind image */}
             <div 
-              className="absolute inset-0 opacity-15 group-hover:opacity-30 transition-opacity duration-700 pointer-events-none"
-              style={{ background: `radial-gradient(ellipse at center, rgba(${project.rgb}, 0.6) 0%, transparent 70%)` }}
+              className="absolute inset-0 opacity-10 group-hover:opacity-25 transition-opacity duration-700 pointer-events-none"
+              style={{ background: `radial-gradient(ellipse at center, rgba(${project.rgb}, ${isLightMode ? 0.3 : 0.6}) 0%, transparent 70%)` }}
             />
             <img
               src={project.image}
               alt={project.title}
               loading="lazy"
-              className="w-full h-full object-cover aspect-video md:aspect-auto md:min-h-[200px] relative z-10 transition-transform duration-700 will-change-transform group-hover:scale-[1.03]"
+              className="w-full h-full object-cover aspect-video md:aspect-auto md:min-h-[200px] relative z-10 transition-transform duration-700 ease-smooth will-change-transform group-hover:scale-[1.03]"
             />
             {/* Edge blending */}
-            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-card/80 dark:from-card/50 to-transparent z-20 md:hidden pointer-events-none" />
-            <div className="absolute top-0 bottom-0 right-0 w-20 bg-gradient-to-l from-card/80 dark:from-card/50 to-transparent z-20 hidden md:block pointer-events-none" />
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white dark:from-[hsl(225,20%,9%)] to-transparent z-20 md:hidden pointer-events-none" />
+            <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-white dark:from-[hsl(225,20%,9%)] to-transparent z-20 hidden md:block pointer-events-none" />
           </div>
 
           {/* Content */}
@@ -379,7 +379,7 @@ function ProjectCard({ project, onClick }: { project: Project; onClick: () => vo
             </p>
 
             {/* Subtle CTA */}
-            <div className="mt-4 flex items-center gap-2 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ color: project.themeColor }}>
+            <div className="mt-4 flex items-center gap-2 text-xs font-medium opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-1 group-hover:translate-y-0" style={{ color: project.themeColor }}>
               <span>Ver proyecto</span>
               <ExternalLink className="w-3 h-3" />
             </div>
@@ -479,7 +479,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
     }
   }, [])
 
-  const bgColor = isDark ? 'hsl(225, 20%, 7%)' : '#ffffff'
+  const bgColor = isDark ? 'hsl(225, 20%, 7%)' : 'hsl(220, 20%, 97%)'
 
   const modalContent = (
     <motion.div 
@@ -492,7 +492,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
     >
       {/* Ambient glow */}
       <div 
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] opacity-[0.08] dark:opacity-[0.12] blur-[100px] pointer-events-none rounded-full"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] opacity-[0.06] dark:opacity-[0.12] blur-[100px] pointer-events-none rounded-full"
         style={{ background: `rgba(${project.rgb}, 1)` }}
       />
 
@@ -500,12 +500,12 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
         
         {/* Top bar */}
         <div 
-          className="h-14 flex items-center px-4 md:px-6 shrink-0 z-20 backdrop-blur-2xl border-b border-border/20 dark:border-white/5"
-          style={{ backgroundColor: isDark ? 'hsla(225,20%,7%,0.85)' : 'rgba(255, 255, 255, 0.85)' }}
+          className="h-14 flex items-center px-4 md:px-6 shrink-0 z-20 backdrop-blur-2xl border-b border-border/30 dark:border-white/5"
+          style={{ backgroundColor: isDark ? 'hsla(225,20%,7%,0.85)' : 'hsla(220,20%,97%,0.85)' }}
         >
           <button
             onClick={onClose}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground bg-secondary/60 dark:bg-white/5 hover:bg-secondary dark:hover:bg-white/10 rounded-xl transition-all duration-200 border border-border/40 dark:border-white/5 outline-none"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground bg-card dark:bg-white/5 hover:bg-secondary dark:hover:bg-white/10 rounded-xl transition-all duration-200 border border-border dark:border-white/5 outline-none shadow-sm dark:shadow-none"
           >
             <ChevronLeft className="w-4 h-4" /> Volver
           </button>
@@ -519,13 +519,13 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
               {/* Hero image — clean, full width */}
               <div className="relative w-full rounded-xl mb-10 overflow-hidden">
                 <div 
-                  className="absolute -inset-6 opacity-20 dark:opacity-25 blur-3xl pointer-events-none -z-10"
+                  className="absolute -inset-6 opacity-15 dark:opacity-25 blur-3xl pointer-events-none -z-10"
                   style={{ background: `rgba(${project.rgb}, 0.5)` }}
                 />
                 <img 
                   src={project.image} 
                   alt={project.title} 
-                  className="w-full h-auto object-cover rounded-xl relative z-10 shadow-xl dark:shadow-2xl dark:shadow-black/30" 
+                  className="w-full h-auto object-cover rounded-xl relative z-10 shadow-lg dark:shadow-2xl dark:shadow-black/30" 
                 />
               </div>
 
@@ -553,14 +553,14 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
               </p>
 
               {/* Stats & links */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-end text-xs font-medium text-muted-foreground mb-8 pb-5 border-b border-border/30 dark:border-white/10 gap-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-end text-xs font-medium text-muted-foreground mb-8 pb-5 border-b border-border dark:border-white/10 gap-4">
                 
                 <div className="flex items-center gap-2.5">
                   <a 
                     href={project.github} 
                     target="_blank" 
                     rel="noreferrer" 
-                    className="flex items-center gap-1.5 text-foreground bg-secondary/60 dark:bg-white/5 hover:bg-secondary dark:hover:bg-white/10 px-4 py-2 rounded-lg transition-all duration-200 outline-none hover:-translate-y-0.5"
+                    className="flex items-center gap-1.5 text-foreground bg-card dark:bg-white/5 hover:bg-secondary dark:hover:bg-white/10 px-4 py-2 rounded-lg transition-all duration-200 outline-none hover:-translate-y-0.5 border border-border dark:border-white/10 shadow-sm dark:shadow-none"
                   >
                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
@@ -584,7 +584,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
               {/* Tech badges */}
               <div className="flex flex-wrap gap-2.5 mb-10">
                 {project.tech.map((t) => (
-                  <div key={t.id} className="flex items-center gap-2 px-3.5 py-2 bg-secondary/60 dark:bg-white/[0.04] border border-border/40 dark:border-white/[0.06] rounded-lg transition-colors duration-200 hover:bg-secondary dark:hover:bg-white/[0.08]">
+                  <div key={t.id} className="flex items-center gap-2 px-3.5 py-2 bg-card dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-lg transition-colors duration-200 hover:bg-secondary dark:hover:bg-white/[0.08] shadow-sm dark:shadow-none">
                     <div className="w-5 h-5 shrink-0">
                       <StackIcon name={t.id as any} className="w-full h-full" />
                     </div>
@@ -652,7 +652,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
         {/* Mobile TOC — floating bottom */}
         <div 
           className="lg:hidden fixed bottom-0 left-0 right-0 z-[10000] backdrop-blur-2xl border-t border-border/30 dark:border-white/10 px-3 py-2.5"
-          style={{ backgroundColor: isDark ? 'hsla(225,20%,7%,0.92)' : 'rgba(255, 255, 255, 0.92)' }}
+          style={{ backgroundColor: isDark ? 'hsla(225,20%,7%,0.92)' : 'hsla(220,20%,97%,0.92)' }}
         >
           <div className="flex gap-1.5 overflow-x-auto scrollbar-none">
             {project.sections.map((section) => {

@@ -25,10 +25,7 @@ export function Navbar() {
   const activeSection = useActiveSection(sectionIds)
 
   const handleMobileNav = useCallback((sectionId: string) => {
-    // 1. Close menu FIRST
     setMobileOpen(false)
-
-    // 2. After a tick (let AnimatePresence start exit), scroll to section
     setTimeout(() => {
       const el = document.getElementById(sectionId)
       if (el) {
@@ -41,13 +38,12 @@ export function Navbar() {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' } as React.CSSProperties}
-      className={`fixed left-0 right-0 z-50 transition-all duration-500 ${
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ type: "spring", stiffness: 260, damping: 24, delay: 0.1 }}
+      className={`fixed left-0 right-0 z-50 transition-all duration-700 ease-smooth ${
         scrolled
-          ? "top-3 mx-4 md:mx-auto md:max-w-3xl rounded-2xl bg-background/70 backdrop-blur-3xl border border-border/30 shadow-2xl shadow-black/20 dark:shadow-black/50 px-5 py-2.5"
+          ? "top-3 mx-4 md:mx-auto md:max-w-3xl rounded-2xl navbar-glass px-5 py-2.5"
           : "top-0 bg-transparent px-6 py-4"
       }`}
     >
@@ -66,7 +62,7 @@ export function Navbar() {
             draggable={false}
           />
           <span
-            className={`font-bold tracking-tight text-foreground transition-all duration-300 ${
+            className={`font-bold tracking-tight text-foreground transition-all duration-500 ease-smooth ${
               scrolled ? "text-sm opacity-0 w-0 overflow-hidden" : "text-base opacity-100"
             }`}
           >
@@ -82,7 +78,7 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className={`relative px-4 py-2 rounded-xl transition-all duration-300 ${
+                className={`relative px-4 py-2 rounded-xl transition-colors duration-300 ${
                   isActive
                     ? "text-foreground"
                     : "text-muted-foreground hover:text-foreground"
@@ -91,9 +87,9 @@ export function Navbar() {
                 {isActive && (
                   <motion.div
                     layoutId="navActiveIndicator"
-                    className="absolute inset-0 bg-secondary/80 dark:bg-white/10 rounded-xl border border-border/50 dark:border-white/10"
+                    className="absolute inset-0 bg-black/[0.05] dark:bg-white/10 rounded-xl"
                     initial={false}
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    transition={{ type: "spring", stiffness: 380, damping: 28 }}
                   />
                 )}
                 <span className="relative z-10">{link.label}</span>
@@ -121,25 +117,28 @@ export function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="md:hidden overflow-hidden"
           >
-            <div className="flex flex-col gap-1 pb-3 border-t border-border/10 pt-3 mt-3">
-              {links.map((link) => {
+            <div className="flex flex-col gap-1 pb-3 border-t border-border/20 pt-3 mt-3">
+              {links.map((link, i) => {
                 const isActive = activeSection === link.id
                 return (
-                  <button
+                  <motion.button
                     key={link.id}
                     type="button"
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.06, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                     onClick={() => handleMobileNav(link.id)}
                     className={`text-left text-sm font-medium px-4 py-2.5 rounded-xl transition-all duration-300 ${
                       isActive
-                        ? "text-foreground bg-secondary/80 dark:bg-white/10"
-                        : "text-muted-foreground"
+                        ? "text-foreground bg-black/[0.05] dark:bg-white/10"
+                        : "text-muted-foreground active:bg-muted/40"
                     }`}
                   >
                     {link.label}
-                  </button>
+                  </motion.button>
                 )
               })}
             </div>

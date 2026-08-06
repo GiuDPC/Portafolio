@@ -19,24 +19,24 @@ export function Education() {
       </motion.h2>
 
       <motion.div 
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="w-full max-w-4xl"
       >
-        <div className="bg-card/70 dark:bg-card/50 backdrop-blur-md border border-border/50 dark:border-white/[0.06] rounded-2xl p-6 md:p-8 space-y-6 shadow-sm dark:shadow-black/10">
+        <div className="card-elevated p-6 md:p-8 space-y-6">
           <div className="flex items-start gap-4">
             <img
               src="/logo-unefa.png"
               alt="UNEFA"
-              className="w-14 h-14 rounded-xl object-contain bg-white p-1.5 shadow-sm border border-border/30"
+              className="w-14 h-14 rounded-xl object-contain bg-white p-1.5 shadow-sm border border-border"
             />
             <div>
               <h3 className="text-lg font-bold text-foreground leading-snug">
                 UNEFA — Universidad Nacional Experimental Politécnica de la Fuerza Armada
               </h3>
-              <p className="text-yellow-500 dark:text-yellow-400 text-sm font-semibold mt-1">Ingeniería de Sistemas</p>
+              <p className="text-amber-700 dark:text-yellow-400 text-sm font-semibold mt-1">Ingeniería de Sistemas</p>
               <p className="text-muted-foreground text-xs mt-1 tracking-wide">
                 2023 — Actualidad (6to Semestre)
               </p>
@@ -62,7 +62,7 @@ export function Education() {
             {skills.map((skill) => (
               <span
                 key={skill}
-                className="px-3 py-1 text-xs font-mono rounded-md bg-secondary/70 dark:bg-secondary/50 text-muted-foreground border border-border/40 dark:border-white/[0.06] transition-colors duration-200 hover:text-foreground hover:border-border dark:hover:border-white/15"
+                className="px-3 py-1.5 text-xs font-mono rounded-lg bg-muted/60 dark:bg-white/[0.04] text-muted-foreground border border-border dark:border-white/[0.06] transition-all duration-200 hover:text-foreground hover:bg-muted hover:shadow-sm"
               >
                 {skill}
               </span>
