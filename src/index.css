@@ -7,25 +7,25 @@
 @layer base {
   :root {
     color-scheme: light;
-    --background: 40 35% 96%; /* Much warmer, slightly more saturated paper tone */
-    --foreground: 220 30% 12%;
-    --card: 40 25% 94%;
-    --card-foreground: 220 30% 12%;
-    --popover: 40 35% 96%;
-    --popover-foreground: 220 30% 12%;
-    --primary: 220 15% 15%;
-    --primary-foreground: 40 30% 98%;
-    --secondary: 40 25% 92%;
-    --secondary-foreground: 220 30% 15%;
-    --muted: 40 20% 90%;
-    --muted-foreground: 220 15% 45%;
-    --accent: 40 30% 90%;
-    --accent-foreground: 220 30% 15%;
+    --background: 0 0% 100%; /* Pure white */
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 222 47% 11%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222 47% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222 47% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 40 20% 88%;
-    --input: 40 20% 88%;
-    --ring: 220 15% 15%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
     --radius: 0.75rem;
     --yellow: 45 100% 51%;
   }

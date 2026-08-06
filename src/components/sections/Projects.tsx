@@ -11,6 +11,8 @@ import graphCoreLogo from "../../assets/graph-core-logo.png"
 import screenshotSentinel from "../../assets/screenshot-sentinel.png"
 import screenshotGraphCore from "../../assets/screenshot-graphcore.png"
 import brincaparkHero from "../../assets/Hero-section.png"
+import tasaVerdeLogo from "../../assets/Logo_TasaVerde.png"
+import tasaVerdeScreenshot from "../../assets/TasaVerde_Pantallas.png"
 
 interface TechBadge {
   id: string
@@ -244,6 +246,69 @@ const projects: Project[] = [
         )
       }
     ]
+  },
+  {
+    id: "tasaverde",
+    title: "TasaVerde",
+    subtitle: "App para monitorear y comparar tasas de cambio en Venezuela con enfoque móvil y offline",
+    date: "Ago 2026",
+    image: tasaVerdeScreenshot,
+    logo: tasaVerdeLogo,
+    themeColor: "rgb(4, 255, 242)",
+    rgb: "0, 255, 242",
+    tech: [
+      { id: "react", name: "React Native" },
+      { id: "typescript", name: "TypeScript" },
+      { id: "nodejs", name: "Node.js" },
+      { id: "express", name: "Express" }
+    ],
+    github: "https://github.com/GiuDPC/TasaVerde-app.git",
+    sections: [
+      {
+        id: "problema",
+        title: "El Problema del Cambio",
+        content: (
+          <>
+            <p>
+              En Venezuela, seguir las tasas de cambio de forma clara y rápida es clave ante la volatilidad constante del mercado. La información suele estar dispersa entre fuentes oficiales y plataformas P2P, lo que complica la comparación en tiempo real.
+            </p>
+            <p>
+              Esto genera incertidumbre para quienes necesitan tomar decisiones rápidas, ya sea para ahorrar, comparar opciones o tener una referencia confiable del valor del dólar y el euro.
+            </p>
+          </>
+        )
+      },
+      {
+        id: "solucion",
+        title: "La Solución: TasaVerde",
+        content: (
+          <>
+            <p>
+              Desarrollé <strong>TasaVerde</strong> como una app que centraliza la información de la tasa BCV y Binance P2P en un solo lugar, ayudando al usuario a identificar la mejor opción con una experiencia simple, visual y funcional.
+            </p>
+            <ul>
+              <li><strong>Dashboard en tiempo real:</strong> tasas actualizadas, diferencia porcentual y última sincronización.</li>
+              <li><strong>Calculadora de conversión:</strong> conversión bidireccional USD/Bs con formato venezolano y copiado rápido.</li>
+              <li><strong>Historial y modo offline:</strong> persistencia de datos y acceso a la última información cuando no hay conexión.</li>
+            </ul>
+          </>
+        )
+      },
+      {
+        id: "tecnologia",
+        title: "Arquitectura y Desarrollo",
+        content: (
+          <>
+            <p>
+              TasaVerde fue construida con <strong>React Native</strong> y <strong>Expo</strong> para ofrecer una experiencia móvil cercana a lo nativo, con una interfaz cuidada y una arquitectura modular orientada a rendimiento y mantenibilidad.
+            </p>
+            <p>
+              En el backend se integra un servicio de obtención de datos en tiempo real, mientras que la persistencia y la caché permiten usar la app de forma útil incluso sin conexión.
+            </p>
+          </>
+        )
+      }
+    ]
   }
 ]
 
@@ -269,7 +334,7 @@ function ProjectCard({ project, onClick }: { project: Project; onClick: () => vo
           style={{ background: `radial-gradient(ellipse at 30% 50%, rgba(${project.rgb}, 0.2) 0%, transparent 70%)` }}
         />
 
-        <div className="relative bg-card/80 dark:bg-card/50 backdrop-blur-md border border-border/60 dark:border-white/[0.06] rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-sm dark:shadow-black/20 group-hover:shadow-xl group-hover:shadow-black/5 dark:group-hover:shadow-black/30 transition-shadow duration-500">
+        <div className="relative bg-card/90 dark:bg-card/50 backdrop-blur-md border border-border/80 dark:border-white/[0.06] rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-md dark:shadow-black/20 group-hover:shadow-xl group-hover:shadow-black/5 dark:group-hover:shadow-black/30 transition-shadow duration-500">
           
           {/* Image — full bleed */}
           <div className="relative md:w-[44%] overflow-hidden bg-secondary/20 dark:bg-black/20">
@@ -414,7 +479,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
     }
   }, [])
 
-  const bgColor = isDark ? 'hsl(225, 20%, 7%)' : 'hsl(40, 25%, 97.5%)'
+  const bgColor = isDark ? 'hsl(225, 20%, 7%)' : '#ffffff'
 
   const modalContent = (
     <motion.div 
@@ -436,7 +501,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
         {/* Top bar */}
         <div 
           className="h-14 flex items-center px-4 md:px-6 shrink-0 z-20 backdrop-blur-2xl border-b border-border/20 dark:border-white/5"
-          style={{ backgroundColor: isDark ? 'hsla(225,20%,7%,0.85)' : 'hsla(40,25%,97.5%,0.85)' }}
+          style={{ backgroundColor: isDark ? 'hsla(225,20%,7%,0.85)' : 'rgba(255, 255, 255, 0.85)' }}
         >
           <button
             onClick={onClose}
@@ -587,7 +652,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
         {/* Mobile TOC — floating bottom */}
         <div 
           className="lg:hidden fixed bottom-0 left-0 right-0 z-[10000] backdrop-blur-2xl border-t border-border/30 dark:border-white/10 px-3 py-2.5"
-          style={{ backgroundColor: isDark ? 'hsla(225,20%,7%,0.92)' : 'hsla(40,25%,97.5%,0.92)' }}
+          style={{ backgroundColor: isDark ? 'hsla(225,20%,7%,0.92)' : 'rgba(255, 255, 255, 0.92)' }}
         >
           <div className="flex gap-1.5 overflow-x-auto scrollbar-none">
             {project.sections.map((section) => {

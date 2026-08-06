@@ -1,13 +1,14 @@
 import { ThemeProvider, useTheme } from "./components/ThemeProvider"
 import { Navbar } from "./components/Navbar"
-import SideRays from "./components/SideRays"
-import Particles from "./components/Particles"
 import { Hero } from "./components/sections/Hero"
-import { Education } from "./components/sections/Experience"
-import { Projects } from "./components/sections/Projects"
-import { TechStack } from "./components/sections/TechStack"
-import { memo } from "react"
+import { memo, lazy, Suspense } from "react"
 import logoSrc from "./assets/GiuDPC-Logo.png"
+
+const SideRays = lazy(() => import("./components/SideRays"))
+const Particles = lazy(() => import("./components/Particles"))
+const Projects = lazy(() => import("./components/sections/Projects").then(m => ({ default: m.Projects })))
+const TechStack = lazy(() => import("./components/sections/TechStack").then(m => ({ default: m.TechStack })))
+const Education = lazy(() => import("./components/sections/Experience").then(m => ({ default: m.Education })))
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -31,28 +32,32 @@ function DarkEffects({ isDark }: { isDark: boolean }) {
       aria-hidden="true"
     >
       <div className="absolute inset-0 mix-blend-screen">
-        <MemoizedSideRays
-          isActive={isDark}
-          origin="top-left"
-          rayColor1="#0ea5e9"
-          rayColor2="#8b5cf6"
-          intensity={2}
-          speed={1}
-          blend={0.6}
-        />
+        <Suspense fallback={null}>
+          <MemoizedSideRays
+            isActive={isDark}
+            origin="top-left"
+            rayColor1="#0ea5e9"
+            rayColor2="#8b5cf6"
+            intensity={2}
+            speed={1}
+            blend={0.6}
+          />
+        </Suspense>
       </div>
       <div className="absolute inset-0">
-        <MemoizedParticles
-          isActive={isDark}
-          particleColors={['#ffffff', '#ffffff']}
-          particleCount={100}
-          particleSpread={10}
-          speed={0.08}
-          particleBaseSize={100}
-          moveParticlesOnHover={false}
-          alphaParticles={true}
-          disableRotation={false}
-        />
+        <Suspense fallback={null}>
+          <MemoizedParticles
+            isActive={isDark}
+            particleColors={['#ffffff', '#ffffff']}
+            particleCount={100}
+            particleSpread={10}
+            speed={0.08}
+            particleBaseSize={100}
+            moveParticlesOnHover={false}
+            alphaParticles={true}
+            disableRotation={false}
+          />
+        </Suspense>
       </div>
     </div>
   )
@@ -73,11 +78,17 @@ function MainContent() {
         <div className="space-y-24 md:space-y-32">
           <Hero />
           <SectionDivider />
-          <TechStack />
+          <Suspense fallback={<div className="h-64 animate-pulse bg-secondary/50 rounded-xl" />}>
+            <TechStack />
+          </Suspense>
           <SectionDivider />
-          <Projects />
+          <Suspense fallback={<div className="h-96 animate-pulse bg-secondary/50 rounded-xl" />}>
+            <Projects />
+          </Suspense>
           <SectionDivider />
-          <Education />
+          <Suspense fallback={<div className="h-64 animate-pulse bg-secondary/50 rounded-xl" />}>
+            <Education />
+          </Suspense>
         </div>
       </main>
 
