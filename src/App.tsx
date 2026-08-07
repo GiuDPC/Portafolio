@@ -34,43 +34,36 @@ function DarkEffects({ isDark }: { isDark: boolean }) {
       className={`fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000 ${isDark ? 'opacity-100' : 'opacity-0'}`} 
       aria-hidden="true"
     >
-      {isMobile ? (
-        <div className="absolute inset-0">
-          <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full bg-sky-500/10 blur-[100px]" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-violet-500/10 blur-[100px]" />
-        </div>
-      ) : (
-        <>
-          <div className="absolute inset-0 mix-blend-screen">
-            <Suspense fallback={null}>
-              <MemoizedSideRays
-                isActive={isDark}
-                origin="top-left"
-                rayColor1="#0ea5e9"
-                rayColor2="#8b5cf6"
-                intensity={2}
-                speed={1}
-                blend={0.6}
-              />
-            </Suspense>
-          </div>
-          <div className="absolute inset-0">
-            <Suspense fallback={null}>
-              <MemoizedParticles
-                isActive={isDark}
-                particleColors={['#ffffff', '#ffffff']}
-                particleCount={100}
-                particleSpread={10}
-                speed={0.08}
-                particleBaseSize={100}
-                moveParticlesOnHover={false}
-                alphaParticles={true}
-                disableRotation={false}
-              />
-            </Suspense>
-          </div>
-        </>
-      )}
+      <div className="absolute inset-0 mix-blend-screen">
+        <Suspense fallback={null}>
+          <MemoizedSideRays
+            isActive={isDark}
+            origin="top-left"
+            rayColor1="#0ea5e9"
+            rayColor2="#8b5cf6"
+            intensity={2}
+            speed={1}
+            blend={0.6}
+            pixelRatio={isMobile ? 0.4 : 1.5}
+          />
+        </Suspense>
+      </div>
+      <div className="absolute inset-0">
+        <Suspense fallback={null}>
+          <MemoizedParticles
+            isActive={isDark}
+            particleColors={['#ffffff', '#ffffff']}
+            particleCount={isMobile ? 25 : 100}
+            particleSpread={10}
+            speed={0.08}
+            particleBaseSize={100}
+            moveParticlesOnHover={false}
+            alphaParticles={true}
+            disableRotation={false}
+            pixelRatio={isMobile ? 0.4 : 1.5}
+          />
+        </Suspense>
+      </div>
     </div>
   )
 }

@@ -239,6 +239,7 @@
   object-fit: contain;
   filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.08));
   transition: filter 0.5s ease;
+  will-change: transform, filter;
 }
 
 @media (min-width: 768px) {
@@ -255,6 +256,15 @@
     contrast(1.1)
     drop-shadow(0 0 30px rgba(14, 165, 233, 0.25))
     drop-shadow(0 0 60px rgba(139, 92, 246, 0.15));
+}
+
+@media (max-width: 768px) {
+  .dark .hero-logo-img {
+    filter:
+      brightness(1.7)
+      contrast(1.1)
+      drop-shadow(0 0 20px rgba(14, 165, 233, 0.3));
+  }
 }
 
 /* Glow backdrop — radial gradient that pulses in dark mode */
@@ -332,6 +342,13 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(20px) saturate(1.8);
   -webkit-backdrop-filter: blur(20px) saturate(1.8);
+}
+
+@media (max-width: 768px) {
+  .navbar-glass, .dark .navbar-glass {
+    backdrop-filter: blur(12px) saturate(1.5);
+    -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  }
 }
 
 /* ═══════ Utility: smooth expo easing ═══════ */

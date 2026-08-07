@@ -17,6 +17,7 @@ interface SideRaysProps {
   opacity?: number;
   isActive?: boolean;
   className?: string;
+  pixelRatio?: number;
 }
 
 const hexToRgb = (hex: string): [number, number, number] => {
@@ -46,7 +47,8 @@ const SideRays = ({
   falloff = 2.0,
   opacity = 1.0,
   isActive = true,
-  className = ''
+  className = '',
+  pixelRatio = 1.5
 }: SideRaysProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const uniformsRef = useRef<Record<string, { value: number | number[] }> | null>(null);
@@ -98,7 +100,7 @@ const SideRays = ({
 
       if (!containerRef.current) return;
 
-      const dpr = window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio, 1.5);
+      const dpr = pixelRatio;
       const renderer = new Renderer({
         dpr,
         alpha: true
@@ -207,7 +209,7 @@ void main() {
 
       const updateSize = () => {
         if (!containerRef.current || !renderer) return;
-        renderer.dpr = window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio, 1.5);
+        renderer.dpr = pixelRatio;
         const { clientWidth: w, clientHeight: h } = containerRef.current;
         renderer.setSize(w, h);
         uniforms.iResolution.value = [w * renderer.dpr, h * renderer.dpr];
@@ -260,7 +262,7 @@ void main() {
         cleanupFunctionRef.current = null;
       }
     };
-  }, [isVisible, speed, rayColor1, rayColor2, intensity, spread, origin, tilt, saturation, blend, falloff, opacity]);
+  }, [isVisible, speed, rayColor1, rayColor2, intensity, spread, origin, tilt, saturation, blend, falloff, opacity, pixelRatio]);
 
   useEffect(() => {
     if (!uniformsRef.current) return;

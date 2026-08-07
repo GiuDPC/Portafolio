@@ -10,9 +10,15 @@ export function ThemeToggle() {
       (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
       : theme
       
-    const rect = e.currentTarget.getBoundingClientRect()
-    const pos = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
-    setTheme(currentTheme === "light" ? "dark" : "light", pos)
+    let x = e.clientX
+    let y = e.clientY
+    if (x === 0 && y === 0) {
+      const rect = e.currentTarget.getBoundingClientRect()
+      x = rect.left + rect.width / 2
+      y = rect.top + rect.height / 2
+    }
+    
+    setTheme(currentTheme === "light" ? "dark" : "light", { x, y })
   }
 
   const isDark = resolvedTheme === "dark"

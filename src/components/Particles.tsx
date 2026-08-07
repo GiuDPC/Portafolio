@@ -129,7 +129,8 @@ const Particles: React.FC<ParticlesProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
-    const dpr = window.innerWidth < 768 ? 1 : Math.min(window.devicePixelRatio, 1.5, pixelRatio);
+    // Use the exact pixelRatio passed in (e.g. 0.3 on mobile) for maximum performance
+    const dpr = pixelRatio;
     const renderer = new Renderer({ dpr, depth: false, alpha: true });
     const gl = renderer.gl;
     container.appendChild(gl.canvas);
