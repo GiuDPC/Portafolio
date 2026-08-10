@@ -1,9 +1,14 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
 import { Projects } from '../sections/Projects'
+import { translations } from '../../locales/translations'
 
 vi.mock('../../ThemeProvider', () => ({
   useTheme: () => ({ resolvedTheme: 'light' })
+}))
+
+vi.mock('../../contexts/LanguageContext', () => ({
+  useLanguage: () => ({ language: 'es', setLanguage: vi.fn(), t: translations.es })
 }))
 
 class MockIntersectionObserver {

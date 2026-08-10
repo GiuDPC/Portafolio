@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
 import { Navbar } from '../Navbar'
+import { translations } from '../../locales/translations'
 
 // Mock de ThemeProvider
 vi.mock('../../ThemeProvider', () => ({
@@ -8,6 +9,10 @@ vi.mock('../../ThemeProvider', () => ({
     resolvedTheme: 'light',
     setTheme: vi.fn()
   })
+}))
+
+vi.mock('../../contexts/LanguageContext', () => ({
+  useLanguage: () => ({ language: 'es', setLanguage: vi.fn(), t: translations.es })
 }))
 
 // Mock de useActiveSection (intersection observer wrapper)
