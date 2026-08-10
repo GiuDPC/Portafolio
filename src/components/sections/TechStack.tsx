@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 import StackIcon from "tech-stack-icons"
 import LogoLoop from "../LogoLoop"
+import { useLanguage } from "../../contexts/LanguageContext"
 
 const techStack = [
   { id: "typescript", name: "TypeScript" },
@@ -27,6 +28,8 @@ const techLogos = techStack.map((tech) => ({
 }))
 
 export function TechStack() {
+  const { t } = useLanguage()
+
   return (
     <section id="tech" className="flex flex-col items-center space-y-8 relative z-10">
       <motion.h2
@@ -36,7 +39,7 @@ export function TechStack() {
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         className="section-title"
       >
-        Tecnologías
+        {t.techStack.title}
       </motion.h2>
 
       <motion.div

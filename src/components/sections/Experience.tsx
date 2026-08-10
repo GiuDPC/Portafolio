@@ -1,4 +1,5 @@
 import { motion } from "framer-motion"
+import { useLanguage } from "../../contexts/LanguageContext"
 
 const skills = [
   "TypeScript", "Node.js", "React", "C++", "PostgreSQL",
@@ -6,6 +7,8 @@ const skills = [
 ]
 
 export function Education() {
+  const { t } = useLanguage()
+
   return (
     <section id="education" className="flex flex-col items-center space-y-10 relative z-10">
       <motion.h2
@@ -15,7 +18,7 @@ export function Education() {
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         className="section-title"
       >
-        Educación
+        {t.education.title}
       </motion.h2>
 
       <motion.div 
@@ -34,28 +37,18 @@ export function Education() {
             />
             <div>
               <h3 className="text-lg font-bold text-foreground leading-snug">
-                UNEFA — Universidad Nacional Experimental Politécnica de la Fuerza Armada
+                {t.education.university}
               </h3>
-              <p className="text-amber-700 dark:text-yellow-400 text-sm font-semibold mt-1">Ingeniería de Sistemas</p>
+              <p className="text-amber-700 dark:text-yellow-400 text-sm font-semibold mt-1">{t.education.degree}</p>
               <p className="text-muted-foreground text-xs mt-1 tracking-wide">
-                2023 — Actualidad (6to Semestre)
+                {t.education.date}
               </p>
             </div>
           </div>
 
           <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
-            <p>
-              Formación en <span className="tech-blue">algoritmos y estructuras de datos</span>,{" "}
-              <span className="tech-green">bases de datos relacionales y NoSQL</span>,{" "}
-              <span className="tech-purple">ingeniería de software</span> y{" "}
-              <span className="tech-orange">redes de computadoras</span>.
-            </p>
-            <p>
-              Desarrollo de proyectos académicos aplicando <span className="tech-cyan">patrones de diseño</span>,{" "}
-              <span className="tech-cyan">arquitectura limpia</span> y buenas prácticas de desarrollo
-              con <span className="tech-blue">TypeScript</span>, <span className="tech-orange">C++</span>,{" "}
-              <span className="tech-green">PostgreSQL</span> y <span className="tech-purple">React</span>.
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: t.education.desc1 }} />
+            <p dangerouslySetInnerHTML={{ __html: t.education.desc2 }} />
           </div>
 
           <div className="flex flex-wrap gap-2 pt-2">

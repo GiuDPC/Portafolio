@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import { createPortal } from "react-dom"
 import { ChevronLeft, Calendar, Clock, ExternalLink } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import StackIcon from "tech-stack-icons"
 import { useTheme } from "../ThemeProvider"
+import { useLanguage } from "../../contexts/LanguageContext"
 
 import sentinelLogo from "../../assets/LogoSentinelCoreBlanco.png"
 import illustrationTwo from "../../assets/Ilustración2.png"
@@ -50,19 +51,19 @@ const extractText = (node: React.ReactNode): string => {
   return '';
 };
 
-const calculateReadTime = (project: Project): string => {
+const calculateReadTime = (project: Project, t: any): string => {
   const text = project.subtitle + ' ' + project.sections.map(s => s.title + ' ' + extractText(s.content)).join(' ');
   const words = text.trim().split(/\s+/).length;
   const minutes = Math.max(1, Math.ceil(words / 200));
-  return `${minutes} min lectura`;
+  return `${minutes} ${t.projects.readTime}`;
 };
 
-const projects: Project[] = [
+const getProjects = (t: any): Project[] => [
   {
     id: "brincapark",
     title: "Brincapark",
-    subtitle: "Sistema integral de gestión de reservas para parques de diversiones",
-    date: "Ago 2025",
+    subtitle: t.projects.items.brincapark.subtitle,
+    date: t.language === 'en' ? "DEC 2025" : "DIC 2025",
     image: brincaparkHero,
     logo: "https://raw.githubusercontent.com/GiuDPC/brincapark-reservation-system/main/frontend/assets/img/Logo.png",
     themeColor: "rgb(56, 189, 248)",
@@ -79,45 +80,35 @@ const projects: Project[] = [
     sections: [
       {
         id: "problema",
-        title: "El Problema de Gestión",
+        title: t.projects.items.brincapark.sections.s1Title,
         content: (
           <>
-            <p>
-              Brincapark partió de la necesidad de digitalizar los procesos manuales de un parque de atracciones, donde las reservas, los ingresos y la operación diaria dependían de múltiples pasos y registros dispersos.
-            </p>
-            <p>
-              El resultado era una alta probabilidad de errores operativos, duplicidad de reservas y una visibilidad limitada para la toma de decisiones del equipo administrativo.
-            </p>
+            <p>{t.projects.items.brincapark.sections.s1P1}</p>
+            <p>{t.projects.items.brincapark.sections.s1P2}</p>
           </>
         )
       },
       {
         id: "solucion",
-        title: "La Solución: Reservas y Operación Centralizada",
+        title: t.projects.items.brincapark.sections.s2Title,
         content: (
           <>
-            <p>
-              Desarrollé una plataforma full stack que permite a los usuarios reservar tickets y paquetes de fiestas de forma sencilla, mientras que los administradores pueden gestionar reservas, visualizar métricas en tiempo real y controlar la operación desde un panel integral.
-            </p>
+            <p>{t.projects.items.brincapark.sections.s2P1}</p>
             <ul>
-              <li><strong>Reservas públicas:</strong> flujo claro para compra y confirmación de entradas.</li>
-              <li><strong>Dashboard administrativo:</strong> métricas, gráficos y control de reservas desde un único lugar.</li>
-              <li><strong>Gestión multi-parque:</strong> soporte para diferentes sedes y configuraciones operativas.</li>
+              <li dangerouslySetInnerHTML={{ __html: t.projects.items.brincapark.sections.s2L1 }} />
+              <li dangerouslySetInnerHTML={{ __html: t.projects.items.brincapark.sections.s2L2 }} />
+              <li dangerouslySetInnerHTML={{ __html: t.projects.items.brincapark.sections.s2L3 }} />
             </ul>
           </>
         )
       },
       {
         id: "tecnologia",
-        title: "Arquitectura y Stack",
+        title: t.projects.items.brincapark.sections.s3Title,
         content: (
           <>
-            <p>
-              El proyecto fue construido con una arquitectura full stack moderna, separando frontend y backend para facilitar mantenimiento, despliegue y escalabilidad.
-            </p>
-            <p>
-              El frontend se despliega en Vercel, el backend en Render y la base de datos se gestiona con MongoDB Atlas, ofreciendo una solución completa y lista para producción.
-            </p>
+            <p>{t.projects.items.brincapark.sections.s3P1}</p>
+            <p>{t.projects.items.brincapark.sections.s3P2}</p>
           </>
         )
       }
@@ -126,8 +117,8 @@ const projects: Project[] = [
   {
     id: "graph-core",
     title: "GraphCore",
-    subtitle: "Entorno Virtual de Aprendizaje Interactivo para Teoría de Grafos",
-    date: "Jul 2026",
+    subtitle: t.projects.items.graphCore.subtitle,
+    date: t.language === 'en' ? "Jul 2026" : "Jul 2026",
     image: screenshotGraphCore,
     logo: graphCoreLogo,
     themeColor: "rgba(16, 185, 129, 1)",
@@ -141,42 +132,34 @@ const projects: Project[] = [
     sections: [
       {
         id: "contexto",
-        title: "Contexto Educativo",
+        title: t.projects.items.graphCore.sections.s1Title,
         content: (
           <>
-            <p>
-              Dentro de la Ingeniería de Sistemas, la <strong>Teoría de Grafos</strong> representa una de las áreas fundamentales de la Matemática Discreta, con aplicaciones críticas en telecomunicaciones, diseño de algoritmos e inteligencia artificial. Sin embargo, su aprendizaje presenta dificultades notables debido al alto nivel de abstracción requerido para comprender estructuras topológicas y rutinas matemáticas complejas.
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: t.projects.items.graphCore.sections.s1P1 }} />
           </>
         )
       },
       {
         id: "propuesta",
-        title: "El Entorno Virtual: GraphCore",
+        title: t.projects.items.graphCore.sections.s2Title,
         content: (
           <>
-            <p>
-              Para superar esta barrera académica, desarrollé <strong>GraphCore</strong>, un Entorno Virtual de Aprendizaje (EVA) diseñado como un laboratorio interactivo. Esta herramienta permite a los estudiantes de ingeniería interactuar directamente con representaciones gráficas, simulaciones dinámicas y experimentación práctica.
-            </p>
-            <p>El sistema se divide en dos módulos de aprendizaje fundamentales:</p>
+            <p dangerouslySetInnerHTML={{ __html: t.projects.items.graphCore.sections.s2P1 }} />
+            <p>{t.projects.items.graphCore.sections.s2P2}</p>
             <ul>
-              <li><strong>Laboratorio Matemático Libre:</strong> Un espacio interactivo destinado a la creación y edición de grafos, facilitando la exploración visual de sus propiedades (ciclos, componentes conexas, caminos).</li>
-              <li><strong>Simulación de Redes de Transporte:</strong> Un entorno donde se analiza visualmente el comportamiento de distintos algoritmos clásicos operando sobre estructuras de conexión en tiempo real.</li>
+              <li dangerouslySetInnerHTML={{ __html: t.projects.items.graphCore.sections.s2L1 }} />
+              <li dangerouslySetInnerHTML={{ __html: t.projects.items.graphCore.sections.s2L2 }} />
             </ul>
           </>
         )
       },
       {
         id: "tecnologia",
-        title: "Tecnología de Alto Rendimiento",
+        title: t.projects.items.graphCore.sections.s3Title,
         content: (
           <>
-            <p>
-              A diferencia de las herramientas educativas basadas en tecnologías web tradicionales, GraphCore fue construido desde cero utilizando <strong>C++17</strong> moderno y <strong>OpenGL</strong>. 
-            </p>
-            <p>
-              Esta decisión arquitectónica de utilizar renderizado acelerado por hardware garantiza que el entorno gráfico pueda manejar simulaciones masivas (como distribuciones orgánicas basadas en algoritmos de atracción/repulsión) a 60 cuadros por segundo sin interrupciones, ofreciendo una retroalimentación visual inmediata y fluida durante el proceso de aprendizaje.
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: t.projects.items.graphCore.sections.s3P1 }} />
+            <p>{t.projects.items.graphCore.sections.s3P2}</p>
           </>
         )
       }
@@ -185,8 +168,8 @@ const projects: Project[] = [
   {
     id: "sentinel-core",
     title: "Sentinel Core",
-    subtitle: "Sistema de Gestión de Incidencias y Monitoreo de ANS (SLA)",
-    date: "Jun 2026",
+    subtitle: t.projects.items.sentinelCore.subtitle,
+    date: t.language === 'en' ? "Jun 2026" : "Jun 2026",
     image: screenshotSentinel,
     logo: sentinelLogo,
     themeColor: "rgba(59, 130, 246, 1)",
@@ -203,45 +186,35 @@ const projects: Project[] = [
     sections: [
       {
         id: "introduccion",
-        title: "El Problema Operativo",
+        title: t.projects.items.sentinelCore.sections.s1Title,
         content: (
           <>
-            <p>
-              En infraestructuras comerciales de gran escala, como el <strong>Centro Comercial Sambil Paraguaná</strong>, la gestión operativa suele verse fragmentada por la dependencia de canales de comunicación informales (como WhatsApp) y registros manuales en papel.
-            </p>
-            <p>
-              Esta desconexión genera "silos de información" donde se pierde por completo la trazabilidad de las tareas. Sin un registro auditable, resulta técnicamente inviable monitorear el desempeño operativo, medir tiempos de respuesta o garantizar la correcta asignación de técnicos a las fallas reportadas.
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: t.projects.items.sentinelCore.sections.s1P1 }} />
+            <p>{t.projects.items.sentinelCore.sections.s1P2}</p>
           </>
         )
       },
       {
         id: "solucion",
-        title: "La Solución: Sentinel Core",
+        title: t.projects.items.sentinelCore.sections.s2Title,
         content: (
           <>
-            <p>
-              Para resolver esta problemática, diseñé y desarrollé <strong>Sentinel Core</strong>: un sistema centralizado de gestión de incidencias que sustituye la informalidad por un flujo de trabajo estructurado y completamente auditable.
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: t.projects.items.sentinelCore.sections.s2P1 }} />
             <ul>
-              <li><strong>Trazabilidad Absoluta:</strong> Cada incidencia reportada genera un ticket único, registrando de manera objetiva quién, cómo y cuándo se resolvió el problema.</li>
-              <li><strong>Monitoreo de ANS (Acuerdos de Nivel de Servicio):</strong> El sistema estructura parámetros lógicos para medir y evaluar los tiempos de atención, garantizando que se cumplan los estándares operativos del centro comercial.</li>
-              <li><strong>Dashboard Gerencial:</strong> Una interfaz analítica en tiempo real que visibiliza la carga de trabajo, tickets abiertos y métricas de desempeño, facilitando la toma de decisiones informadas.</li>
+              <li dangerouslySetInnerHTML={{ __html: t.projects.items.sentinelCore.sections.s2L1 }} />
+              <li dangerouslySetInnerHTML={{ __html: t.projects.items.sentinelCore.sections.s2L2 }} />
+              <li dangerouslySetInnerHTML={{ __html: t.projects.items.sentinelCore.sections.s2L3 }} />
             </ul>
           </>
         )
       },
       {
         id: "arquitectura",
-        title: "Arquitectura y Desarrollo",
+        title: t.projects.items.sentinelCore.sections.s3Title,
         content: (
           <>
-            <p>
-              Sentinel Core está construido sobre una arquitectura moderna que prioriza la automatización y la persistencia segura de la información.
-            </p>
-            <p>
-              El frontend, desarrollado con <strong>React</strong> y estandarizado visualmente con <strong>Tailwind CSS</strong>, ofrece una experiencia de usuario fluida e intuitiva tanto para el personal técnico como administrativo. En el backend, la lógica de negocio y la API están fuertemente tipadas con <strong>TypeScript</strong> y conectadas a una base de datos relacional <strong>PostgreSQL</strong>, asegurando la integridad referencial y la rápida consulta de datos históricos para auditorías.
-            </p>
+            <p>{t.projects.items.sentinelCore.sections.s3P1}</p>
+            <p dangerouslySetInnerHTML={{ __html: t.projects.items.sentinelCore.sections.s3P2 }} />
           </>
         )
       }
@@ -250,8 +223,8 @@ const projects: Project[] = [
   {
     id: "tasaverde",
     title: "TasaVerde",
-    subtitle: "App para monitorear y comparar tasas de cambio en Venezuela con enfoque móvil y offline",
-    date: "Ago 2026",
+    subtitle: t.projects.items.tasaVerde.subtitle,
+    date: t.language === 'en' ? "Aug 2026" : "Ago 2026",
     image: tasaVerdeScreenshot,
     logo: tasaVerdeLogo,
     themeColor: "rgb(4, 255, 242)",
@@ -266,45 +239,35 @@ const projects: Project[] = [
     sections: [
       {
         id: "problema",
-        title: "El Problema del Cambio",
+        title: t.projects.items.tasaVerde.sections.s1Title,
         content: (
           <>
-            <p>
-              En Venezuela, seguir las tasas de cambio de forma clara y rápida es clave ante la volatilidad constante del mercado. La información suele estar dispersa entre fuentes oficiales y plataformas P2P, lo que complica la comparación en tiempo real.
-            </p>
-            <p>
-              Esto genera incertidumbre para quienes necesitan tomar decisiones rápidas, ya sea para ahorrar, comparar opciones o tener una referencia confiable del valor del dólar y el euro.
-            </p>
+            <p>{t.projects.items.tasaVerde.sections.s1P1}</p>
+            <p>{t.projects.items.tasaVerde.sections.s1P2}</p>
           </>
         )
       },
       {
         id: "solucion",
-        title: "La Solución: TasaVerde",
+        title: t.projects.items.tasaVerde.sections.s2Title,
         content: (
           <>
-            <p>
-              Desarrollé <strong>TasaVerde</strong> como una app que centraliza la información de la tasa BCV y Binance P2P en un solo lugar, ayudando al usuario a identificar la mejor opción con una experiencia simple, visual y funcional.
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: t.projects.items.tasaVerde.sections.s2P1 }} />
             <ul>
-              <li><strong>Dashboard en tiempo real:</strong> tasas actualizadas, diferencia porcentual y última sincronización.</li>
-              <li><strong>Calculadora de conversión:</strong> conversión bidireccional USD/Bs con formato venezolano y copiado rápido.</li>
-              <li><strong>Historial y modo offline:</strong> persistencia de datos y acceso a la última información cuando no hay conexión.</li>
+              <li dangerouslySetInnerHTML={{ __html: t.projects.items.tasaVerde.sections.s2L1 }} />
+              <li dangerouslySetInnerHTML={{ __html: t.projects.items.tasaVerde.sections.s2L2 }} />
+              <li dangerouslySetInnerHTML={{ __html: t.projects.items.tasaVerde.sections.s2L3 }} />
             </ul>
           </>
         )
       },
       {
         id: "tecnologia",
-        title: "Arquitectura y Desarrollo",
+        title: t.projects.items.tasaVerde.sections.s3Title,
         content: (
           <>
-            <p>
-              TasaVerde fue construida con <strong>React Native</strong> y <strong>Expo</strong> para ofrecer una experiencia móvil cercana a lo nativo, con una interfaz cuidada y una arquitectura modular orientada a rendimiento y mantenibilidad.
-            </p>
-            <p>
-              En el backend se integra un servicio de obtención de datos en tiempo real, mientras que la persistencia y la caché permiten usar la app de forma útil incluso sin conexión.
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: t.projects.items.tasaVerde.sections.s3P1 }} />
+            <p>{t.projects.items.tasaVerde.sections.s3P2}</p>
           </>
         )
       }
@@ -313,7 +276,7 @@ const projects: Project[] = [
 ]
 
 /* ──── Project Card ──── */
-function ProjectCard({ project, onClick }: { project: Project; onClick: () => void }) {
+function ProjectCard({ project, onClick, t }: { project: Project; onClick: () => void; t: any }) {
   const { resolvedTheme } = useTheme()
   const isLightMode = resolvedTheme === "light"
   const logoSrc = project.id === "sentinel-core" && isLightMode ? illustrationTwo : project.logo
@@ -359,7 +322,7 @@ function ProjectCard({ project, onClick }: { project: Project; onClick: () => vo
             <div className="flex items-center gap-3 text-[11px] text-muted-foreground mb-3 font-medium tracking-wide uppercase">
               <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {project.date}</span>
               <span className="opacity-25">•</span>
-              <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {calculateReadTime(project)}</span>
+              <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {calculateReadTime(project, t)}</span>
             </div>
             
             <div className="flex items-center gap-3 mb-2">
@@ -380,7 +343,7 @@ function ProjectCard({ project, onClick }: { project: Project; onClick: () => vo
 
             {/* Subtle CTA */}
             <div className="mt-4 flex items-center gap-2 text-xs font-medium opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-1 group-hover:translate-y-0" style={{ color: project.themeColor }}>
-              <span>Ver proyecto</span>
+              <span>{t.projects.viewProject}</span>
               <ExternalLink className="w-3 h-3" />
             </div>
           </div>
@@ -447,7 +410,7 @@ function useScrollSpy(containerRef: React.RefObject<HTMLDivElement | null>, sect
 }
 
 /* ──── Fullscreen Article View ──── */
-function ArticleView({ project, onClose }: { project: Project; onClose: () => void }) {
+function ArticleView({ project, onClose, t }: { project: Project; onClose: () => void; t: any }) {
   const contentRef = useRef<HTMLDivElement>(null)
   const [mounted, setMounted] = useState(false)
   const { resolvedTheme } = useTheme()
@@ -507,7 +470,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
             onClick={onClose}
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground bg-card dark:bg-white/5 hover:bg-secondary dark:hover:bg-white/10 rounded-xl transition-all duration-200 border border-border dark:border-white/5 outline-none shadow-sm dark:shadow-none"
           >
-            <ChevronLeft className="w-4 h-4" /> Volver
+            <ChevronLeft className="w-4 h-4" /> {t.projects.back}
           </button>
         </div>
 
@@ -532,7 +495,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
               {/* Meta */}
               <div className="flex items-center gap-4 text-[11px] font-medium text-muted-foreground mb-5 uppercase tracking-wider">
                 <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> {project.date}</span>
-                <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> {calculateReadTime(project)}</span>
+                <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> {calculateReadTime(project, t)}</span>
               </div>
 
               {/* Title with logo */}
@@ -565,7 +528,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                     </svg>
-                    Código
+                    {t.projects.code}
                   </a>
                   {project.demo && (
                     <a 
@@ -575,7 +538,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
                       className="flex items-center gap-1.5 text-white px-4 py-2 rounded-lg transition-all duration-200 outline-none hover:-translate-y-0.5"
                       style={{ backgroundColor: project.themeColor, boxShadow: `0 4px 16px rgba(${project.rgb}, 0.35)` }}
                     >
-                      <ExternalLink className="w-4 h-4" /> Demo
+                      <ExternalLink className="w-4 h-4" /> {t.projects.demo}
                     </a>
                   )}
                 </div>
@@ -611,7 +574,7 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
             <div className="hidden lg:block lg:w-[32%] relative">
               <div className="sticky top-6">
                 <h4 className="text-[11px] font-bold uppercase tracking-[0.12em] text-muted-foreground mb-4 ml-4">
-                  Tabla de Contenidos
+                  {t.projects.toc}
                 </h4>
                 <nav className="flex flex-col gap-1 relative">
                   {project.sections.map((section) => {
@@ -688,6 +651,8 @@ function ArticleView({ project, onClose }: { project: Project; onClose: () => vo
 /* ──── Main Component ──── */
 export function Projects() {
   const [selected, setSelected] = useState<Project | null>(null)
+  const { t } = useLanguage()
+  const projectsList = useMemo(() => getProjects(t), [t])
 
   return (
     <>
@@ -699,15 +664,16 @@ export function Projects() {
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="section-title"
         >
-          Proyectos Destacados
+          {t.projects.title}
         </motion.h2>
 
         <div className="w-full max-w-4xl space-y-5">
-          {projects.map((project) => (
+          {projectsList.map((project) => (
             <ProjectCard
               key={project.id}
               project={project}
               onClick={() => setSelected(project)}
+              t={t}
             />
           ))}
         </div>
@@ -718,6 +684,7 @@ export function Projects() {
           <ArticleView
             project={selected}
             onClose={() => setSelected(null)}
+            t={t}
           />
         )}
       </AnimatePresence>

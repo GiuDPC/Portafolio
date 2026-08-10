@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Check, Mail } from "lucide-react"
 import { createPortal } from "react-dom"
 import { motion, AnimatePresence, type Variants } from "framer-motion"
+import { useLanguage } from "../../contexts/LanguageContext"
 import logoSrc from "../../assets/GiuDPC-Logo.png"
 
 function GithubIcon({ className }: { className?: string }) {
@@ -37,7 +38,7 @@ const itemVariants: Variants = {
 }
 
 /* ── Floating Toast ── */
-function CopyToast({ show, onDone }: { show: boolean; onDone: () => void }) {
+function CopyToast({ show, onDone, text }: { show: boolean; onDone: () => void; text: string }) {
   useEffect(() => {
     if (show) {
       const timer = setTimeout(onDone, 2200)
@@ -60,7 +61,7 @@ function CopyToast({ show, onDone }: { show: boolean; onDone: () => void }) {
               <Check className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-foreground">Email copied!</p>
+              <p className="text-sm font-semibold text-foreground">{text}</p>
               <p className="text-xs text-muted-foreground">giuseppe.dpc.05@gmail.com</p>
             </div>
           </div>
@@ -73,6 +74,7 @@ function CopyToast({ show, onDone }: { show: boolean; onDone: () => void }) {
 
 export function Hero() {
   const [copied, setCopied] = useState(false)
+  const { t } = useLanguage()
 
   const copyEmail = () => {
     navigator.clipboard.writeText("giuseppe.dpc.05@gmail.com")
@@ -106,7 +108,7 @@ export function Hero() {
         {/* Title */}
         <motion.div variants={itemVariants}>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">
-            Backend Developer
+            {t.hero.title}
           </h1>
           <motion.div
             initial={{ scaleX: 0, opacity: 0 }}
@@ -129,15 +131,17 @@ export function Hero() {
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:text-foreground hover:bg-muted/60 transition-all duration-200"
           >
             <GithubIcon className="w-[18px] h-[18px]" />
-            <span>Github</span>
+            <span>{t.hero.github}</span>
           </a>
           <a
-            href="#"
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg opacity-40 cursor-not-allowed"
-            title="Coming soon"
+            href="https://www.linkedin.com/in/giuseppepoliandri"
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:text-foreground hover:bg-muted/60 transition-all duration-200"
+            title="LinkedIn"
           >
             <LinkedinIcon className="w-[18px] h-[18px]" />
-            <span>LinkedIn</span>
+            <span>{t.hero.linkedin}</span>
           </a>
           <button
             onClick={copyEmail}
@@ -149,7 +153,7 @@ export function Hero() {
               <Check className={`w-[18px] h-[18px] absolute inset-0 text-emerald-500 dark:text-emerald-400 transition-all duration-300 ${copied ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-75 -rotate-12'}`} />
             </span>
             <span className="transition-colors duration-300">
-              {copied ? <span className="text-emerald-500 dark:text-emerald-400 font-medium">Copied!</span> : "Email"}
+              {copied ? <span className="text-emerald-500 dark:text-emerald-400 font-medium">{t.hero.copied}</span> : t.hero.email}
             </span>
           </button>
         </motion.div>
@@ -159,23 +163,12 @@ export function Hero() {
           variants={itemVariants}
           className="max-w-3xl mt-4 sm:mt-6 text-left space-y-4 px-2"
         >
-          <p className="text-[15px] leading-relaxed text-muted-foreground">
-            Ingeniero de Sistemas especializado en <span className="tech-yellow">Backend Development</span> y{" "}
-            <span className="tech-green">Arquitectura de Software</span>. Construyo sistemas robustos
-            enfocados en rendimiento y escalabilidad, aunque también poseo fuertes habilidades en el desarrollo web integral.
-          </p>
-          <p className="text-[15px] leading-relaxed text-muted-foreground">
-            Mi stack principal incluye <span className="tech-blue">Go</span>,{" "}
-            <span className="tech-blue">TypeScript</span>,{" "}
-            <span className="tech-yellow">JavaScript</span>,{" "}
-            <span className="tech-purple">Node.js</span>,{" "}
-            <span className="tech-green">PostgreSQL</span> y{" "}
-            <span className="tech-cyan">SQL</span>.
-          </p>
+          <p className="text-[15px] leading-relaxed text-muted-foreground" dangerouslySetInnerHTML={{ __html: t.hero.description1 }} />
+          <p className="text-[15px] leading-relaxed text-muted-foreground" dangerouslySetInnerHTML={{ __html: t.hero.description2 }} />
         </motion.div>
       </motion.section>
 
-      <CopyToast show={copied} onDone={() => setCopied(false)} />
+      <CopyToast show={copied} onDone={() => setCopied(false)} text={t.hero.emailCopied} />
     </>
   )
 }

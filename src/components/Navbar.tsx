@@ -1,13 +1,16 @@
 import { ThemeToggle } from "./ThemeToggle"
+import { LanguageToggle } from "./LanguageToggle"
 import { useState, useEffect, useMemo, useCallback } from "react"
 import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useActiveSection } from "../hooks/useActiveSection"
+import { useLanguage } from "../contexts/LanguageContext"
 import logoSrc from "../assets/GiuDPC-Logo.png"
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -16,12 +19,12 @@ export function Navbar() {
   }, [])
 
   const links = [
-    { href: "#tech", label: "Tecnologías", id: "tech" },
-    { href: "#projects", label: "Proyectos", id: "projects" },
-    { href: "#education", label: "Educación", id: "education" },
+    { href: "#tech", label: t.navbar.tech, id: "tech" },
+    { href: "#projects", label: t.navbar.projects, id: "projects" },
+    { href: "#education", label: t.navbar.education, id: "education" },
   ]
 
-  const sectionIds = useMemo(() => links.map(l => l.id), [])
+  const sectionIds = useMemo(() => links.map(l => l.id), [links])
   const activeSection = useActiveSection(sectionIds)
 
   const handleMobileNav = useCallback((sectionId: string) => {
@@ -99,6 +102,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
+          <LanguageToggle />
           <ThemeToggle />
           <button
             onClick={() => setMobileOpen(!mobileOpen)}

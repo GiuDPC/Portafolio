@@ -1,4 +1,5 @@
 import { ThemeProvider, useTheme } from "./components/ThemeProvider"
+import { LanguageProvider, useLanguage } from "./contexts/LanguageContext"
 import { Navbar } from "./components/Navbar"
 import { Hero } from "./components/sections/Hero"
 import { memo, lazy, Suspense } from "react"
@@ -71,6 +72,7 @@ function DarkEffects({ isDark }: { isDark: boolean }) {
 function MainContent() {
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === "dark"
+  const { t } = useLanguage()
 
   return (
     <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary/30">
@@ -103,7 +105,7 @@ function MainContent() {
             <img src={logoSrc} alt="" className="footer-logo" draggable={false} aria-hidden="true" />
             <p className="text-sm font-medium text-muted-foreground">
               <a href="https://github.com/GiuDPC" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">
-                Github
+                {t.footer.github}
               </a>
               <span className="mx-3 opacity-40">•</span>
               © {new Date().getFullYear()} Giuseppe Poliandri
@@ -121,7 +123,9 @@ function MainContent() {
 function App() {
   return (
     <ThemeProvider defaultTheme="dark">
-      <MainContent />
+      <LanguageProvider>
+        <MainContent />
+      </LanguageProvider>
     </ThemeProvider>
   )
 }
