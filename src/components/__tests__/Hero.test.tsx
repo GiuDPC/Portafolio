@@ -9,7 +9,7 @@ vi.mock('../../ThemeProvider', () => ({
 describe('Hero Component', () => {
   it('renders main heading and roles', () => {
     render(<Hero />)
-    expect(screen.getByText('Backend Developer')).toBeInTheDocument()
+    expect(screen.getByText('Full Stack Developer')).toBeInTheDocument()
   })
 
   it('renders action buttons', () => {
