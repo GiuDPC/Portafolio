@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react"
-import { Check, Mail } from "lucide-react"
+import { Check, Mail, FileText } from "lucide-react"
 import { createPortal } from "react-dom"
 import { motion, AnimatePresence, type Variants } from "framer-motion"
 import { useLanguage } from "../../contexts/LanguageContext"
 import logoSrc from "../../assets/GiuDPC-Logo.png"
+import cvEs from "../../assets/CV/Giuseppe_Poliandri_CV.pdf"
+import cvEn from "../../assets/CV/Giuseppe_Poliandri_CV_EN.pdf"
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -74,7 +76,7 @@ function CopyToast({ show, onDone, text }: { show: boolean; onDone: () => void; 
 
 export function Hero() {
   const [copied, setCopied] = useState(false)
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
 
   const copyEmail = () => {
     navigator.clipboard.writeText("giuseppe.dpc.05@gmail.com")
@@ -156,6 +158,14 @@ export function Hero() {
               {copied ? <span className="text-emerald-500 dark:text-emerald-400 font-medium">{t.hero.copied}</span> : t.hero.email}
             </span>
           </button>
+          <a
+            href={language === 'en' ? cvEn : cvEs}
+            download
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:text-foreground hover:bg-muted/60 transition-all duration-200"
+          >
+            <FileText className="w-[18px] h-[18px]" />
+            <span>{t.hero.downloadCV}</span>
+          </a>
         </motion.div>
 
         {/* About */}

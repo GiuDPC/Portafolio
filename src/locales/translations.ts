@@ -14,6 +14,7 @@ export const translations = {
       email: 'Email',
       copied: '¡Copiado!',
       emailCopied: '¡Email copiado!',
+      downloadCV: 'Descargar CV',
       description1: 'Ingeniero de Sistemas especializado en <span class="tech-yellow">Full Stack Development</span> y <span class="tech-green">Arquitectura de Software</span>. Construyo sistemas robustos enfocados en rendimiento y escalabilidad, con fuertes habilidades en el desarrollo web integral.',
       description2: 'Mi stack principal incluye <span class="tech-blue">TypeScript</span>, <span class="tech-yellow">JavaScript</span>, <span class="tech-purple">Node.js</span>, <span class="tech-green">PostgreSQL</span> y <span class="tech-cyan">SQL</span>.'
     },
@@ -119,6 +120,7 @@ export const translations = {
       email: 'Email',
       copied: 'Copied!',
       emailCopied: 'Email copied!',
+      downloadCV: 'Download CV',
       description1: 'Systems Engineer specialized in <span class="tech-yellow">Full Stack Development</span> and <span class="tech-green">Software Architecture</span>. I build robust systems focused on performance and scalability, with strong skills in comprehensive web development.',
       description2: 'My main stack includes <span class="tech-blue">TypeScript</span>, <span class="tech-yellow">JavaScript</span>, <span class="tech-purple">Node.js</span>, <span class="tech-green">PostgreSQL</span> and <span class="tech-cyan">SQL</span>.'
     },
