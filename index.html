@@ -3,39 +3,57 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Primary Meta Tags -->
     <meta name="color-scheme" content="light dark" />
     <title>Giuseppe Poliandri — Fullstack Developer | Portafolio</title>
     <meta name="title" content="Giuseppe Poliandri — Fullstack Developer | Portafolio" />
-    <meta name="description" content="Portafolio de Giuseppe Poliandri. Ingeniero de Sistemas especializado en Fullstack Development y Arquitectura de Software. Proyectos con TypeScript, Go, Node.js, PostgreSQL, React y C++." />
-    <meta name="keywords" content="giuseppe poliandri, fullstack developer, typescript, go, node.js, postgresql, react, c++, arquitectura de software, ingeniería de sistemas, portafolio, venezuela, full stack developer" />
+    <meta name="description" content="Portafolio profesional de Giuseppe Poliandri. Ingeniero de Sistemas especializado en Fullstack Development, Microservicios y Arquitectura de Software. Proyectos con TypeScript, Go, Node.js, PostgreSQL, React y C++." />
+    <meta name="keywords" content="giuseppe poliandri, giudpc, fullstack developer, software engineer, ingeniero de sistemas, typescript, go, golang, node.js, postgresql, react, react native, c++, arquitectura de software, microservicios, portafolio, venezuela, remote developer" />
     <meta name="author" content="Giuseppe Poliandri" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href="https://giudpc.vercel.app" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
+    <!-- Alternate Languages (Hreflang) -->
+    <link rel="alternate" hreflang="es" href="https://giudpc.vercel.app/" />
+    <link rel="alternate" hreflang="en" href="https://giudpc.vercel.app/" />
+    <link rel="alternate" hreflang="x-default" href="https://giudpc.vercel.app/" />
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="profile" />
     <meta property="og:locale" content="es_VE" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:site_name" content="Giuseppe Poliandri — Portafolio" />
-    <meta property="og:title" content="Giuseppe Poliandri — Fullstack Developer" />
-    <meta property="og:description" content="Ingeniero de Sistemas especializado en Fullstack Development y Arquitectura de Software. Proyectos con TypeScript, Go, Node.js, PostgreSQL." />
-    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:title" content="Giuseppe Poliandri — Fullstack Developer | Portafolio" />
+    <meta property="og:description" content="Ingeniero de Sistemas especializado en Fullstack Development y Arquitectura de Software. Conoce mis proyectos con TypeScript, Go, Node.js, PostgreSQL y React." />
+    <meta property="og:image" content="https://giudpc.vercel.app/og-image.png" />
+    <meta property="og:image:secure_url" content="https://giudpc.vercel.app/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Giuseppe Poliandri — Fullstack Developer Portafolio" />
     <meta property="og:url" content="https://giudpc.vercel.app" />
 
-    <!-- Twitter -->
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Giuseppe Poliandri — Fullstack Developer" />
-    <meta name="twitter:description" content="Ingeniero de Sistemas especializado en Fullstack Development y Arquitectura de Software." />
-    <meta name="twitter:image" content="/og-image.png" />
+    <meta name="twitter:description" content="Ingeniero de Sistemas especializado en Fullstack Development y Arquitectura de Software. TypeScript, Go, Node.js, PostgreSQL, React." />
+    <meta name="twitter:image" content="https://giudpc.vercel.app/og-image.png" />
+    <meta name="twitter:image:alt" content="Giuseppe Poliandri — Fullstack Developer Portafolio" />
 
-    <!-- Theme Color -->
+    <!-- Geo & Local Info -->
+    <meta name="geo.region" content="VE-I" />
+    <meta name="geo.placename" content="Punto Fijo, Falcón, Venezuela" />
+
+    <!-- Theme Color & Mobile -->
     <meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Giuseppe P." />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <!-- Fonts -->
@@ -48,21 +66,59 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Giuseppe Poliandri",
-      "jobTitle": "Fullstack Developer",
-      "url": "https://giudpc.vercel.app",
-      "sameAs": [
-        "https://github.com/GiuDPC"
-      ],
-      "knowsAbout": ["TypeScript", "Go", "Node.js", "PostgreSQL", "React", "C++", "Software Architecture"],
-      "alumniOf": {
-        "@type": "CollegeOrUniversity",
-        "name": "UNEFA"
-      }
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://giudpc.vercel.app/#person",
+          "name": "Giuseppe Poliandri",
+          "alternateName": "GiuDPC",
+          "jobTitle": "Fullstack Developer",
+          "url": "https://giudpc.vercel.app",
+          "image": "https://giudpc.vercel.app/og-image.png",
+          "sameAs": [
+            "https://github.com/GiuDPC",
+            "https://www.linkedin.com/in/giuseppepoliandri"
+          ],
+          "knowsAbout": [
+            "Fullstack Development",
+            "TypeScript",
+            "Go",
+            "Node.js",
+            "PostgreSQL",
+            "React",
+            "React Native",
+            "C++",
+            "Software Architecture",
+            "Microservices",
+            "REST APIs",
+            "WebSockets",
+            "Docker"
+          ],
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Universidad Nacional Experimental Politécnica de la Fuerza Armada (UNEFA)"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Punto Fijo",
+            "addressRegion": "Falcón",
+            "addressCountry": "VE"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://giudpc.vercel.app/#website",
+          "url": "https://giudpc.vercel.app",
+          "name": "Giuseppe Poliandri — Fullstack Developer",
+          "description": "Portafolio profesional de Giuseppe Poliandri, Ingeniero de Sistemas especializado en Fullstack Development y Arquitectura de Software.",
+          "author": {
+            "@id": "https://giudpc.vercel.app/#person"
+          },
+          "inLanguage": ["es", "en"]
+        }
+      ]
     }
     </script>
-
   </head>
   <body>
     <noscript>

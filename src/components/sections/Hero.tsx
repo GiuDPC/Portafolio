@@ -160,8 +160,11 @@ export function Hero() {
           </button>
           <a
             href={language === 'en' ? cvEn : cvEs}
-            download
+            download={language === 'en' ? "Giuseppe_Poliandri_CV_EN.pdf" : "Giuseppe_Poliandri_CV.pdf"}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:text-foreground hover:bg-muted/60 transition-all duration-200"
+            aria-label={t.hero.downloadCV}
           >
             <FileText className="w-[18px] h-[18px]" />
             <span>{t.hero.downloadCV}</span>
