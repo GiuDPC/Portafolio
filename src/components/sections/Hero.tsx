@@ -100,6 +100,10 @@ export function Hero() {
           <motion.img
             src={logoSrc}
             alt="GiuDPC — Giuseppe Poliandri"
+            width={160}
+            height={160}
+            decoding="async"
+            fetchPriority="high"
             className="hero-logo-img"
             draggable={false}
             animate={{ y: [0, -6, 0] }}

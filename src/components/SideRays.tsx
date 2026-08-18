@@ -218,11 +218,11 @@ void main() {
       const loop = (t: number) => {
         if (!rendererRef.current || !uniformsRef.current || !meshRef.current) return;
         
-        if (isActiveRef.current) {
+        if (isActiveRef.current && !document.hidden) {
           uniforms.iTime.value = t * 0.001;
           try {
             renderer.render({ scene: mesh });
-          } catch (e) {
+          } catch {
             // ignore
           }
         }
@@ -245,7 +245,7 @@ void main() {
             if (loseCtx) loseCtx.loseContext();
             const canvas = renderer.gl.canvas;
             if (canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas);
-          } catch (e) {}
+          } catch {}
         }
 
         rendererRef.current = null;

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import StackIcon from "tech-stack-icons"
+import { TechIcon } from "../TechIcon"
 import LogoLoop from "../LogoLoop"
 import { useLanguage } from "../../contexts/LanguageContext"
 
@@ -23,7 +23,7 @@ const techStack = [
 
 const techLogos = techStack.map((tech) => ({
   title: tech.name,
-  node: <StackIcon name={tech.id as any} className="h-7 w-7" />,
+  node: <TechIcon name={tech.id} className="h-9 w-9" />,
   href: undefined,
 }))
 
@@ -36,7 +36,7 @@ export function TechStack() {
         initial={{ opacity: 0, y: 8 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.50, ease: [0.16, 1, 0.3, 1] }}
         className="section-title"
       >
         {t.techStack.title}
@@ -51,7 +51,7 @@ export function TechStack() {
       >
         <LogoLoop
           logos={techLogos}
-          speed={30}
+          speed={40}
           direction="left"
           logoHeight={44}
           gap={24}

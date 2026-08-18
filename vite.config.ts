@@ -12,6 +12,28 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    target: "es2020",
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules/framer-motion")) {
+            return "vendor-motion"
+          }
+          if (id.includes("node_modules/ogl")) {
+            return "vendor-ogl"
+          }
+          if (id.includes("node_modules/react") || id.includes("node_modules/react-dom")) {
+            return "vendor-react"
+          }
+          if (id.includes("node_modules/lucide-react")) {
+            return "vendor-icons"
+          }
+        },
+      },
+    },
+  },
   test: {
     globals: true,
     environment: 'jsdom',

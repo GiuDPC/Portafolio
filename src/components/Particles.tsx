@@ -209,7 +209,7 @@ const Particles: React.FC<ParticlesProps> = ({
     const update = (t: number) => {
       animationFrameId = requestAnimationFrame(update);
       
-      if (isActiveRef.current) {
+      if (isActiveRef.current && !document.hidden) {
         const delta = t - lastTime;
         lastTime = t;
         elapsed += delta * speed;

@@ -24,7 +24,7 @@ export function Navbar() {
     { href: "#education", label: t.navbar.education, id: "education" },
   ]
 
-  const sectionIds = useMemo(() => links.map(l => l.id), [links])
+  const sectionIds = useMemo(() => ["tech", "projects", "education"], [])
   const activeSection = useActiveSection(sectionIds)
 
   const handleMobileNav = useCallback((sectionId: string) => {
@@ -59,6 +59,9 @@ export function Navbar() {
           <img
             src={logoSrc}
             alt="GiuDPC Logo"
+            width={36}
+            height={36}
+            decoding="async"
             className={`transition-all duration-500 ease-out dark:brightness-[1.6] dark:contrast-[1.1] ${
               scrolled ? "w-7 h-7" : "w-9 h-9"
             }`}

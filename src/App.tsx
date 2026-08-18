@@ -2,7 +2,7 @@ import { ThemeProvider, useTheme } from "./components/ThemeProvider"
 import { LanguageProvider, useLanguage } from "./contexts/LanguageContext"
 import { Navbar } from "./components/Navbar"
 import { Hero } from "./components/sections/Hero"
-import { memo, lazy, Suspense } from "react"
+import { memo, lazy, Suspense, useState, useEffect } from "react"
 import { useMediaQuery } from "./hooks/useMediaQuery"
 import logoSrc from "./assets/GiuDPC-Logo.png"
 
@@ -37,6 +37,17 @@ const MemoizedSideRays = memo(SideRays)
 
 function DarkEffects({ isDark }: { isDark: boolean }) {
   const isMobile = useMediaQuery("(max-width: 768px)")
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    // Defer WebGL mounting slightly so initial paint occurs instantaneously
+    const timer = setTimeout(() => setMounted(true), 60)
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (!mounted) {
+    return <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden="true" />
+  }
 
   return (
     <div 
@@ -53,7 +64,7 @@ function DarkEffects({ isDark }: { isDark: boolean }) {
             intensity={2}
             speed={1}
             blend={0.6}
-            pixelRatio={isMobile ? 0.4 : 1.5}
+            pixelRatio={isMobile ? 0.35 : 1.2}
           />
         </Suspense>
       </div>
@@ -69,7 +80,7 @@ function DarkEffects({ isDark }: { isDark: boolean }) {
             moveParticlesOnHover={false}
             alphaParticles={true}
             disableRotation={false}
-            pixelRatio={isMobile ? 0.4 : 1.5}
+            pixelRatio={isMobile ? 0.35 : 1.2}
           />
         </Suspense>
       </div>

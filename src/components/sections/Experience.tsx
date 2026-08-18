@@ -33,6 +33,10 @@ export function Education() {
             <img
               src="/logo-unefa.png"
               alt="UNEFA"
+              width={56}
+              height={56}
+              loading="lazy"
+              decoding="async"
               className="w-14 h-14 rounded-xl object-contain bg-white p-1.5 shadow-sm border border-border"
             />
             <div>

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import { createPortal } from "react-dom"
 import { ChevronLeft, Calendar, Clock, ExternalLink } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import StackIcon from "tech-stack-icons"
+import { TechIcon } from "../TechIcon"
 import { useTheme } from "../ThemeProvider"
 import { useLanguage } from "../../contexts/LanguageContext"
 
@@ -310,6 +310,9 @@ function ProjectCard({ project, onClick, t }: { project: Project; onClick: () =>
               src={project.image}
               alt={project.title}
               loading="lazy"
+              width={600}
+              height={338}
+              decoding="async"
               className="w-full h-full object-cover aspect-video md:aspect-auto md:min-h-[200px] relative z-10 transition-transform duration-700 ease-smooth will-change-transform group-hover:scale-[1.03]"
             />
             {/* Edge blending */}
@@ -329,6 +332,9 @@ function ProjectCard({ project, onClick, t }: { project: Project; onClick: () =>
               <img 
                 src={logoSrc} 
                 alt="" 
+                width={28}
+                height={28}
+                decoding="async"
                 className="w-7 h-7 object-contain"
                 style={{ filter: `drop-shadow(0 0 6px rgba(${project.rgb}, 0.35))` }}
               />
@@ -488,6 +494,9 @@ function ArticleView({ project, onClose, t }: { project: Project; onClose: () =>
                 <img 
                   src={project.image} 
                   alt={project.title} 
+                  width={800}
+                  height={450}
+                  decoding="async"
                   className="w-full h-auto object-cover rounded-xl relative z-10 shadow-lg dark:shadow-2xl dark:shadow-black/30" 
                 />
               </div>
@@ -503,6 +512,9 @@ function ArticleView({ project, onClose, t }: { project: Project; onClose: () =>
                 <img 
                   src={logoSrc} 
                   alt="Logo" 
+                  width={48}
+                  height={48}
+                  decoding="async"
                   className="w-11 h-11 md:w-12 md:h-12 object-contain"
                   style={{ filter: `drop-shadow(0 0 10px rgba(${project.rgb}, 0.35))` }}
                 />
@@ -549,7 +561,7 @@ function ArticleView({ project, onClose, t }: { project: Project; onClose: () =>
                 {project.tech.map((t) => (
                   <div key={t.id} className="flex items-center gap-2 px-3.5 py-2 bg-card dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-lg transition-colors duration-200 hover:bg-secondary dark:hover:bg-white/[0.08] shadow-sm dark:shadow-none">
                     <div className="w-5 h-5 shrink-0">
-                      <StackIcon name={t.id as any} className="w-full h-full" />
+                      <TechIcon name={t.id} className="w-full h-full" />
                     </div>
                     <span className="text-sm font-medium text-foreground">{t.name}</span>
                   </div>

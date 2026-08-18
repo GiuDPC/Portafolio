@@ -205,11 +205,11 @@ const LogoLoop = memo(function LogoLoop({
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-[90px] bg-gradient-to-l from-card/90 via-card/30 to-transparent dark:from-background/90" />
         </>
       )}
-      <div ref={trackRef} className={cn("flex will-change-transform", isVertical ? "flex-col" : "flex-row")}> 
-        <ul className={cn("flex items-center", isVertical && "flex-col")} role="list">
+      <div ref={trackRef} className={cn("flex will-change-transform w-max", isVertical ? "flex-col" : "flex-row")}> 
+        <ul className={cn("flex items-center flex-nowrap shrink-0", isVertical ? "flex-col" : "flex-row")} role="list">
           {logos.map((item, index) => renderItem(item, `first-${index}`))}
         </ul>
-        <ul className={cn("flex items-center", isVertical && "flex-col")} role="list" aria-hidden="true">
+        <ul className={cn("flex items-center flex-nowrap shrink-0", isVertical ? "flex-col" : "flex-row")} role="list" aria-hidden="true">
           {logos.map((item, index) => renderItem(item, `second-${index}`))}
         </ul>
       </div>
